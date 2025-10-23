@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BNK 리브핏카드 | 20대 여성 타깃 상세페이지 템플릿</title>
+  <meta name="description" content="뷰티·카페·온라인 쇼핑 리워드, 디지털 편의성, 친환경 디자인을 강조한 BNK 리브핏카드 상세페이지 템플릿" />
+  <style>
+    :root{
+      --bnk-red:#D62828;
+      --ink:#222222;
+      --muted:#6B7280;
+      --bg:#FFFFFF;
+      --soft:#FAFAFA;
+      --accent:#EDE9FE; /* soft lavender */
+      --radius:14px;
+      --shadow:0 8px 28px rgba(0,0,0,.08);
+      --maxw:1200px;
+    }
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:"Noto Sans KR",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Ubuntu,"Helvetica Neue","Apple SD Gothic Neo",sans-serif;color:var(--ink);background:var(--bg);}
+    img{max-width:100%;display:block}
+    .container{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:14px 20px;border-radius:999px;border:0;background:var(--bnk-red);color:#fff;font-weight:700;text-decoration:none;box-shadow:var(--shadow)}
+    .btn:hover{filter:brightness(.95)}
+    .btn--ghost{background:#fff;color:var(--bnk-red);border:2px solid var(--bnk-red)}
+    header.site{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.8);backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid #eee}
+    header .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+    .logo{display:flex;align-items:center;gap:10px;font-weight:900}
+    .logo .dot{width:10px;height:10px;border-radius:50%;background:var(--bnk-red)}
+    nav a{color:var(--ink);text-decoration:none;margin-left:18px;font-weight:600}
+    nav a:hover{color:var(--bnk-red)}
+
+    /* Hero */
+    .hero{background:linear-gradient(135deg,#FFF 0%,var(--accent) 100%);}
+    .hero .grid{display:grid;gap:28px;grid-template-columns:1.05fr .95fr;align-items:center;padding:48px 0}
+    .hero h1{font-size:clamp(28px,5vw,48px);line-height:1.15;margin:0 0 12px}
+    .hero p{font-size:clamp(14px,2.4vw,18px);color:var(--muted);margin:0 0 24px}
+    .hero .actions{display:flex;gap:12px;flex-wrap:wrap}
+    .hero .photo{position:relative;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+    .hero .tag{position:absolute;bottom:16px;left:16px;background:#fff;padding:8px 12px;border-radius:999px;font-weight:700;box-shadow:var(--shadow)}
+
+    /* Section shell */
+    section{padding:72px 0}
+    .section-title{font-size:28px;margin:0 0 12px}
+    .section-sub{color:var(--muted);margin:0 0 28px}
+
+    /* Benefits */
+    .benefits .cards{display:grid;gap:16px;grid-template-columns:repeat(3,1fr)}
+    .card{background:#fff;border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
+    .card .icon{width:56px;height:56px;border-radius:14px;background:var(--soft);display:grid;place-items:center;font-size:24px;margin-bottom:12px}
+    .card h3{margin:0 0 6px;font-size:18px}
+    .card p{margin:0;color:var(--muted)}
+
+    /* Lifestyle */
+    .lifestyle .grid{display:grid;gap:16px;grid-template-columns:repeat(3,1fr)}
+    .life{position:relative;border-radius:18px;overflow:hidden;min-height:220px}
+    .life img{width:100%;height:100%;object-fit:cover}
+    .life .label{position:absolute;inset:auto 16px 16px 16px;background:rgba(255,255,255,.82);backdrop-filter:blur(6px);padding:12px 14px;border-radius:12px;font-weight:700;box-shadow:var(--shadow)}
+
+    /* Digital */
+    .digital .wrap{display:grid;gap:24px;grid-template-columns:1fr 1fr;align-items:center}
+    .bullets{display:grid;gap:14px}
+    .bullet{display:flex;gap:12px;align-items:flex-start}
+    .bullet .dot{width:10px;height:10px;border-radius:50%;background:var(--bnk-red);margin-top:7px}
+    .mock{border-radius:24px;overflow:hidden;box-shadow:var(--shadow);background:#fff;padding:10px}
+
+    /* Design */
+    .design .hero-card{display:grid;place-items:center;background:linear-gradient(180deg,#fff, #F6F7FB);border-radius:24px;padding:28px;box-shadow:var(--shadow)}
+    .swatches{display:flex;gap:10px;justify-content:center;margin-top:16px}
+    .swatch{width:28px;height:28px;border-radius:50%;border:2px solid #fff;box-shadow:var(--shadow)}
+    .swatch.pink{background:#FBD3E9}
+    .swatch.white{background:#FFFFFF;border-color:#eee}
+    .swatch.navy{background:#0F172A}
+    .eco{margin-top:10px;color:var(--muted);text-align:center}
+
+    /* Promo CTA */
+    .promo{background:var(--bnk-red);color:#fff;border-radius:18px;padding:26px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .promo h3{margin:0;font-size:22px}
+
+    footer{padding:48px 0;border-top:1px solid #eee;color:#666}
+    footer small{display:block}
+
+    @media (max-width: 980px){
+      nav{display:none}
+      .hero .grid{grid-template-columns:1fr}
+      .digital .wrap{grid-template-columns:1fr}
+      .benefits .cards{grid-template-columns:1fr}
+      .lifestyle .grid{grid-template-columns:1fr}
+    }
+    @media (prefers-reduced-motion: reduce){
+      *{scroll-behavior:auto}
+    }
+  </style>
+</head>
+<body>
+  <!-- Sticky header -->
+  <header class="site">
+    <div class="container wrap" aria-label="주요 네비게이션">
+      <div class="logo" aria-label="BNK 리브핏카드">
+        <span class="dot" aria-hidden="true"></span>
+        <span>BNK 리브핏카드</span>
+      </div>
+      <nav>
+        <a href="#benefits">혜택</a>
+        <a href="#lifestyle">라이프</a>
+        <a href="#digital">디지털</a>
+        <a href="#design">디자인</a>
+        <a href="#apply" class="btn" style="padding:8px 14px">신청하기</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="container">
+      <div class="grid">
+        <div>
+          <h1 id="hero-title">나의 일상, 나의 리듬.<br/>부산은행 리브핏카드로 균형 잡힌 소비를.</h1>
+          <p>뷰티, 카페, 온라인 쇼핑까지 — 나를 위한 리워드가 일상이 되다.</p>
+          <div class="actions">
+            <a class="btn" href="#benefits" aria-label="혜택 보러가기">지금 혜택 보기 →</a>
+            <a class="btn btn--ghost" href="#apply" aria-label="카드 신청하기">카드 신청하기</a>
+          </div>
+        </div>
+        <div class="photo" aria-hidden="true">
+          <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?q=80&w=1400&auto=format&fit=crop" alt="카페에서 노트북을 사용하는 젊은 여성과 카드 이미지"/>
+          <span class="tag">뷰티·카페·쇼핑 리워드</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits -->
+  <section id="benefits" class="benefits" aria-labelledby="benefit-title">
+    <div class="container">
+      <h2 id="benefit-title" class="section-title">나를 위한 3가지 리워드 라인업</h2>
+      <p class="section-sub">자주 쓰는 곳일수록 더 커지는 혜택</p>
+      <div class="cards" role="list">
+        <article class="card" role="listitem" aria-label="뷰티 리워드">
+          <div class="icon" aria-hidden="true">💄</div>
+          <h3>BEAUTY — 10% 캐시백</h3>
+          <p>올리브영·시코르 등 지정 가맹점 결제 시</p>
+        </article>
+        <article class="card" role="listitem" aria-label="카페 리워드">
+          <div class="icon" aria-hidden="true">☕</div>
+          <h3>CAFE — 7% 캐시백</h3>
+          <p>스타벅스·투썸·이디야 등</p>
+        </article>
+        <article class="card" role="listitem" aria-label="쇼핑 포인트">
+          <div class="icon" aria-hidden="true">🛍️</div>
+          <h3>SHOPPING — 5% 포인트 적립</h3>
+          <p>쿠팡·무신사·지그재그 등 주요 쇼핑몰</p>
+        </article>
+      </div>
+      <p style="color:var(--muted);margin-top:10px;font-size:14px">※ 실제 혜택 구조·대상 가맹점·한도·전월 실적 조건 등은 상품 약관을 확인하세요.</p>
+    </div>
+  </section>
+
+  <!-- Lifestyle -->
+  <section id="lifestyle" class="lifestyle" aria-labelledby="life-title">
+    <div class="container">
+      <h2 id="life-title" class="section-title">당신의 라이프에 딱 맞는 소비 루틴</h2>
+      <p class="section-sub">세 가지 장면으로 상상해보는 나의 하루</p>
+      <div class="grid">
+        <figure class="life" aria-label="SELF-CARE">
+          <img src="https://images.unsplash.com/photo-1556228453-efd1e1fd7205?q=80&w=1400&auto=format&fit=crop" alt="뷰티 제품과 조용한 공간"/>
+          <figcaption class="label">SELF-CARE — 매달 올리브영에서 리워드 받기</figcaption>
+        </figure>
+        <figure class="life" aria-label="CHILL-OUT">
+          <img src="https://images.unsplash.com/photo-1498804103079-a6351b050096?q=80&w=1400&auto=format&fit=crop" alt="카페에서 커피 타임"/>
+          <figcaption class="label">CHILL-OUT — 퇴근길 카페에서도 캐시백</figcaption>
+        </figure>
+        <figure class="life" aria-label="ONLINE SMART">
+          <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1400&auto=format&fit=crop" alt="온라인 쇼핑 장바구니"/>
+          <figcaption class="label">ONLINE SMART — 결제할 땐 포인트 챙기기</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Digital -->
+  <section id="digital" class="digital" aria-labelledby="digital-title">
+    <div class="container">
+      <div class="wrap">
+        <div>
+          <h2 id="digital-title" class="section-title">앱 하나로 관리되는 스마트한 금융 루틴</h2>
+          <p class="section-sub">BNK Pay 연동과 간편결제로 더욱 편리하게</p>
+          <div class="bullets">
+            <div class="bullet"><span class="dot" aria-hidden="true"></span><div>결제·포인트·청구서까지 BNK Pay로 한 번에 관리</div></div>
+            <div class="bullet"><span class="dot" aria-hidden="true"></span><div>삼성페이·애플페이·네이버페이 연동 지원</div></div>
+            <div class="bullet"><span class="dot" aria-hidden="true"></span><div>소비내역 분석 레포트로 월별 리워드 한눈에</div></div>
+          </div>
+        </div>
+        <aside class="mock" aria-label="앱 UI 목업">
+          <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=1200&auto=format&fit=crop" alt="스마트폰 화면 목업"/>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- Design -->
+  <section id="design" class="design" aria-labelledby="design-title">
+    <div class="container">
+      <h2 id="design-title" class="section-title">부산의 감성을 담은 미니멀 디자인</h2>
+      <p class="section-sub">재활용 플라스틱 80% 이상 사용한 친환경 카드</p>
+      <div class="hero-card">
+        <img src="https://images.unsplash.com/photo-1529078155058-5d716f45d604?q=80&w=1400&auto=format&fit=crop" alt="쉐도우가 있는 카드 실물 이미지" style="border-radius:16px;max-width:560px"/>
+        <div class="swatches" aria-label="컬러 옵션">
+          <span class="swatch pink" title="핑크"></span>
+          <span class="swatch white" title="화이트"></span>
+          <span class="swatch navy" title="네이비"></span>
+        </div>
+        <p class="eco">미세 스크래치를 줄이는 매트 코팅 · 파지감 향상 라운드 엣지</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Promotion CTA -->
+  <section id="apply" class="container" aria-labelledby="apply-title">
+    <div class="promo">
+      <div>
+        <h3 id="apply-title">지금 가입하면 3만원 웰컴 리워드!</h3>
+        <p style="margin:6px 0 0">리브핏카드로 나의 일상 소비를 더 가치있게.</p>
+      </div>
+      <a class="btn" href="#" aria-label="카드 신청하기">카드 신청하기 →</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <small>※ 본 페이지는 기획·디자인 템플릿 예시입니다. 실제 상품 혜택, 이용 조건, 수수료, 연회비 등은 부산은행 공식 약관과 상품설명서를 확인하세요.</small>
+      <small>© BNK Busan Bank. All rights reserved.</small>
+    </div>
+  </footer>
+
+  <script>
+    // 간단한 접근성/UX 향상: 앵커 클릭 시 포커스 이동
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', e=>{
+        const id=a.getAttribute('href');
+        const el=document.querySelector(id);
+        if(!el) return;
+        // 스크롤 후 포커스 부여
+        setTimeout(()=>{
+          el.setAttribute('tabindex','-1');
+          el.focus({preventScroll:true});
+        }, 400);
+      });
+    });
+  </script>
+</body>
+</html>
