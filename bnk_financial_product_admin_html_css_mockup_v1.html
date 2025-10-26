@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>예금·적금 상품관리 | BNK Admin</title>
+  <!-- Apache ECharts & OpenAI 연동용 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <style>
+    :root {
+      --bnk-red: #e6002d;
+      --gray-100: #f7f8fa;
+      --gray-200: #e2e5eb;
+      --gray-500: #6b7280;
+      --gray-700: #2d2f35;
+      --white: #ffffff;
+      --radius: 14px;
+      --shadow: 0 4px 16px rgba(0,0,0,0.06);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Pretendard", "Segoe UI", Arial;
+      background: var(--gray-100);
+      color: var(--gray-700);
+    }
+
+    header {
+      background: var(--white);
+      border-bottom: 1px solid var(--gray-200);
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    header .title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--bnk-red);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 240px 1fr 340px;
+      min-height: calc(100vh - 64px);
+    }
+    aside {
+      background: var(--white);
+      border-right: 1px solid var(--gray-200);
+      padding: 20px;
+    }
+    aside nav a {
+      display: block;
+      padding: 10px 12px;
+      color: var(--gray-700);
+      text-decoration: none;
+      border-radius: var(--radius);
+      margin-bottom: 4px;
+      font-weight: 500;
+    }
+    aside nav a.active {
+      background: var(--bnk-red);
+      color: #fff;
+      font-weight: 700;
+    }
+
+    main {
+      padding: 20px;
+    }
+    .section {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .section h2 {
+      margin: 0 0 16px;
+      font-size: 18px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    thead {
+      background: var(--gray-100);
+      font-size: 13px;
+      color: var(--gray-500);
+    }
+    th, td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--gray-200);
+      text-align: left;
+    }
+    tbody tr:hover { background: #fafbff; }
+
+    .btn {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--gray-200);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      margin-right: 6px;
+      color: var(--gray-700);
+      background: #fff;
+      cursor:pointer;
+    }
+    .btn.primary { background: var(--bnk-red); color: #fff; border-color: var(--bnk-red); }
+    .btn.small { font-size: 12px; padding: 4px 8px; }
+
+    .ai-panel {
+      background: var(--white);
+      border-left: 1px solid var(--gray-200);
+      padding: 20px;
+    }
+    .ai-panel h3 { font-size: 16px; margin: 0 0 10px; color: var(--bnk-red); }
+    .ai-box {
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      padding: 12px;
+      background: var(--gray-100);
+      font-size: 13px;
+      line-height: 1.4;
+      margin-bottom: 14px;
+    }
+    .input-row { display: flex; gap: 8px; margin-top: 10px; }
+    .input-row input { flex: 1; padding: 8px; border-radius: 8px; border: 1px solid var(--gray-200); }
+
+    #chartBox {
+      height: 260px;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="title">BNK 예금·적금 상품관리</div>
+    <div>관리자: <strong>Admin01</strong></div>
+  </header>
+
+  <div class="layout">
+    <aside>
+      <nav>
+        <a href="#" class="active">예금/적금 관리</a>
+        <a href="#">카드 관리</a>
+        <a href="#">퇴직연금 관리</a>
+        <a href="#">외환 관리</a>
+        <a href="#">펀드 관리</a>
+        <hr />
+        <a href="#">AI Q&A 게시판</a>
+        <a href="#">오류코드 진단</a>
+        <a href="#">통계(EChart)</a>
+      </nav>
+    </aside>
+
+    <main>
+      <section class="section">
+        <h2>상품 등록 / 수정</h2>
+        <div>
+          <input type="text" id="productName" placeholder="상품명 (예: BNK 더드림 정기예금)" style="width:50%; padding:8px; border:1px solid #ddd; border-radius:8px;">
+          <a class="btn primary" id="btnRegister">등록</a>
+          <a class="btn" id="btnModify">수정</a>
+          <a class="btn" id="btnDelete">삭제</a>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>상품 목록</h2>
+        <table id="productTable">
+          <thead>
+            <tr>
+              <th>상품ID</th>
+              <th>상품명</th>
+              <th>금리(연)</th>
+              <th>기간</th>
+              <th>상태</th>
+              <th>등록일</th>
+              <th>관리</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>#D-1001</td>
+              <td>BNK 더드림 정기예금</td>
+              <td>3.25%</td>
+              <td>12개월</td>
+              <td>운영중</td>
+              <td>2025-10-01</td>
+              <td><a class="btn small">수정</a> <a class="btn small">삭제</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="section">
+        <h2>상품군별 통계</h2>
+        <div id="chartBox"></div>
+      </section>
+    </main>
+
+    <aside class="ai-panel">
+      <h3>AI 도우미</h3>
+      <div class="ai-box">
+        <strong>자동상품설명 생성</strong><br>
+        <div class="input-row">
+          <input id="aiPrompt" placeholder="상품명 입력 후 Enter" />
+          <a class="btn primary small" id="btnGenerate">생성</a>
+        </div>
+        <div id="aiResult" style="margin-top:10px;font-size:13px;color:#222;"></div>
+      </div>
+
+      <div class="ai-box">
+        <strong>오류코드 진단</strong><br>
+        <div id="aiError">예시: RULE-TERM-002 → 약관 필수 항목 누락 가능성</div>
+      </div>
+    </aside>
+  </div>
+
+  <script>
+    // Apache EChart 예시 (가입률 / 해지율)
+    var chartDom = document.getElementById('chartBox');
+    var myChart = echarts.init(chartDom);
+    var option = {
+      tooltip: { trigger: 'axis' },
+      legend: { data: ['가입률', '해지율'] },
+      xAxis: { type: 'category', data: ['1월','2월','3월','4월','5월','6월'] },
+      yAxis: { type: 'value' },
+      series: [
+        { name: '가입률', type: 'line', data: [120, 200, 150, 80, 70, 110], color: '#e6002d' },
+        { name: '해지율', type: 'line', data: [60, 90, 80, 40, 30, 50], color: '#6b7280' }
+      ]
+    };
+    myChart.setOption(option);
+
+    // OpenAI API 연결 예시 (Axios)
+    const OPENAI_KEY = 'YOUR_API_KEY'; // 실제 키로 교체
+    document.getElementById('btnGenerate').addEventListener('click', async ()=>{
+      const prompt = document.getElementById('aiPrompt').value;
+      if(!prompt) return alert('상품명을 입력하세요');
+      document.getElementById('aiResult').innerText = 'AI 응답 생성 중...';
+
+      try {
+        const response = await axios.post('https://api.openai.com/v1/chat/completions', {
+          model: 'gpt-3.5-turbo',
+          messages: [{role:'user', content:`${prompt} 상품의 고객 친화적 설명을 2문장으로 작성해줘.`}]
+        }, {
+          headers: { Authorization: `Bearer ${OPENAI_KEY}` }
+        });
+
+        document.getElementById('aiResult').innerText = response.data.choices[0].message.content;
+      } catch(e){
+        document.getElementById('aiResult').innerText = 'OpenAI 요청 오류: ' + e.message;
+      }
+    });
+  </script>
+</body>
+</html>

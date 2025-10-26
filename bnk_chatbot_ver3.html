@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>예금·적금 챗봇</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      background: #f7f8f9;
+      font-family: 'Noto Sans KR', sans-serif;
+      margin: 0;
+      height: 100vh;
+    }
+
+    /* === 팝업 트리거 버튼 === */
+    .chatbot-float-btn {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #D71E28; /* 부산은행 레드 */
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 64px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: all 0.2s ease;
+      z-index: 1000;
+    }
+    .chatbot-float-btn:hover {
+      background: #b51821;
+      transform: scale(1.05);
+    }
+
+    /* === 챗봇 팝업창 === */
+    .chat-container {
+      position: fixed;
+      bottom: 100px;
+      right: 30px;
+      width: 420px;
+      height: 650px;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      visibility: hidden;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+      z-index: 999;
+    }
+    .chat-container.active {
+      visibility: visible;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    header {
+      background: #D71E28;
+      color: white;
+      padding: 14px 16px;
+      font-weight: 600;
+      font-size: 18px;
+      text-align: center;
+    }
+
+    #chat-window {
+      flex: 1;
+      padding: 16px;
+      overflow-y: auto;
+      background: #f7f8f9;
+    }
+
+    .message {
+      margin-bottom: 12px;
+      display: flex;
+    }
+    .bot { justify-content: flex-start; }
+    .user { justify-content: flex-end; }
+
+    .bubble {
+      max-width: 75%;
+      padding: 10px 14px;
+      border-radius: 14px;
+      line-height: 1.4;
+      font-size: 15px;
+    }
+
+    .bot .bubble {
+      background: #eef0f2;
+      color: #222;
+      border-top-left-radius: 0;
+    }
+    .user .bubble {
+      background: #D71E28;
+      color: white;
+      border-top-right-radius: 0;
+    }
+
+    footer {
+      display: flex;
+      padding: 8px;
+      border-top: 1px solid #ddd;
+      background: white;
+      align-items: center;
+    }
+
+    #user-input {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      background: #f1f3f5;
+      font-size: 15px;
+    }
+
+    /* === 전송 버튼 === */
+    .chatbot-button {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      margin-left: 6px;
+    }
+    .chatbot-button svg {
+      fill: #D71E28; /* 버튼 색상 변경 (빨강) */
+      transition: fill 0.2s ease;
+    }
+    .chatbot-button:hover svg {
+      fill: #b51821;
+    }
+
+    /* === 기타 === */
+    button.calc-btn {
+      margin-top: 6px;
+      background: #D71E28;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 10px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    input.calc-input {
+      width: 90px;
+      margin: 3px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 2px 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🔘 하단 플로팅 버튼 -->
+  <button class="chatbot-float-btn" id="chatbotToggle">🤖</button>
+
+  <!-- 🤖 챗봇 팝업 -->
+  <div class="chat-container" id="chatbotBox">
+    <header>예금·적금 챗봇</header>
+    <main id="chat-window"></main>
+    <footer>
+      <input id="user-input" type="text" placeholder="메시지를 입력하세요..." />
+      <button type="button" id="send-btn" class="chatbot-button">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="22px" class="send-icon">
+          <path d="M476.59 227.05l-.16-.07L49.35 49.84A23.56 23.56 0 0027.14 52 24.65 24.65 0 0016 72.59v113.29a24 24 0 0019.52 23.57l232.93 43.07a4 4 0 010 7.86L35.53 303.45A24 24 0 0016 327v113.31A23.57 23.57 0 0026.59 460a23.94 23.94 0 0013.22 4 24.55 24.55 0 009.52-1.93L476.4 285.94l.19-.09a32 32 0 000-58.8z"></path>
+        </svg>
+      </button>
+    </footer>
+  </div>
+
+  <script>
+    // === 챗봇 팝업 토글 ===
+    const chatbotToggle = document.getElementById("chatbotToggle");
+    const chatbotBox = document.getElementById("chatbotBox");
+
+    chatbotToggle.addEventListener("click", () => {
+      chatbotBox.classList.toggle("active");
+    });
+
+    // === 챗봇 로직 ===
+    const chatWindow = document.getElementById("chat-window");
+    const input = document.getElementById("user-input");
+    const sendBtn = document.getElementById("send-btn");
+
+    sendBtn.addEventListener("click", sendMessage);
+    input.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") sendMessage();
+    });
+
+    function sendMessage() {
+      const text = input.value.trim();
+      if (!text) return;
+      appendMessage("user", text);
+      input.value = "";
+      setTimeout(() => handleBotResponse(text), 400);
+    }
+
+    function appendMessage(sender, text, html) {
+      const msg = document.createElement("div");
+      msg.classList.add("message", sender);
+      const bubble = document.createElement("div");
+      bubble.classList.add("bubble");
+      bubble.innerHTML = html || text;
+      msg.appendChild(bubble);
+      chatWindow.appendChild(msg);
+      chatWindow.scrollTop = chatWindow.scrollHeight;
+    }
+
+    function handleBotResponse(userText) {
+      let reply = "";
+      userText = userText.replaceAll(" ", "");
+
+      if (userText.includes("예금") || userText.includes("적금")) {
+        reply = `
+          <b>추천 상품 금리 비교</b><br>
+          (기준: 2025.10 현재)<br><br>
+          <canvas id="rateChart" width="300" height="200"></canvas>
+          <button class='calc-btn' onclick="showSimulator()">세후 수익 계산</button>
+        `;
+        appendMessage("bot", reply, reply);
+        setTimeout(drawChart, 300);
+        return;
+      }
+
+      if (userText.includes("세후") || userText.includes("이자")) {
+        reply = "세율 15.4% 기준 세후이자 계산을 원하신가요?<br><button class='calc-btn' onclick='showSimulator()'>계산하기</button>";
+      } else if (userText.includes("안녕") || userText.includes("hello")) {
+        reply = "안녕하세요! 😊 예금·적금 금리, 세후이자 계산 등 무엇이든 물어보세요.";
+      } else {
+        reply = "‘예금’, ‘적금’, ‘세후이자’ 중에서 궁금한 걸 물어보세요.";
+      }
+
+      appendMessage("bot", reply, reply);
+    }
+
+    function drawChart() {
+      const ctx = document.getElementById('rateChart');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['정기예금(12M)', '자유적금(24M)', '청년우대적금'],
+          datasets: [{
+            label: '금리(%)',
+            data: [3.2, 3.0, 5.0],
+            backgroundColor: ['#3B81F6', '#6CA6FF', '#D71E28']
+          }]
+        },
+        options: {
+          plugins: { legend: { display: false } },
+          scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
+        }
+      });
+    }
+
+    function showSimulator() {
+      const html = `
+        <b>세후이자 계산기</b><br>
+        원금(만원): <input id='amount' type='number' value='1000' class='calc-input'><br>
+        기간(개월): <input id='term' type='number' value='12' class='calc-input'><br>
+        금리(%): <input id='rate' type='number' value='3.0' class='calc-input'><br>
+        <button class='calc-btn' onclick='calcInterest()'>계산</button>
+      `;
+      appendMessage("bot", html, html);
+    }
+
+    function calcInterest() {
+      const amount = document.getElementById("amount").value * 10000;
+      const term = document.getElementById("term").value;
+      const rate = document.getElementById("rate").value / 100;
+      const gross = amount * rate * (term / 12);
+      const tax = gross * 0.154;
+      const net = amount + gross - tax;
+      const result = `
+        세전이자: ${gross.toLocaleString()}원<br>
+        세금: ${tax.toLocaleString()}원<br>
+        만기수령액(세후): <b>${net.toLocaleString()}원</b>
+      `;
+      appendMessage("bot", result, result);
+    }
+
+    appendMessage("bot", "안녕하세요! 👋<br>예금·적금 금리 비교 및 세후이자 계산을 도와드릴게요.<br><small>예: '예금 금리 비교', '1천만원 1년 세후'</small>");
+  </script>
+</body>
+</html>

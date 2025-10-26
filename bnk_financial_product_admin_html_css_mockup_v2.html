@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>예금·적금 확장형 관리자 | BNK Admin</title>
+  <!-- Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <style>
+    :root {
+      --bnk-red: #e6002d;
+      --ink-900:#101216; --ink-700:#2d2f35; --ink-500:#6b7280; --ink-300:#a3a9b6;
+      --bg:#f6f7fb; --card:#ffffff; --line:#e6e8ef;
+      --radius:14px; --shadow:0 6px 20px rgba(26,30,41,.08);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink-900);font:14px/1.5 "Pretendard","Segoe UI",Arial}
+
+    header{height:64px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 20px;position:sticky;top:0;z-index:10}
+    .title{font-weight:800;color:var(--bnk-red)}
+    .layout{display:grid;grid-template-columns:260px 1fr 360px;min-height:calc(100vh - 64px)}
+
+    aside.left{background:#fff;border-right:1px solid var(--line);padding:18px}
+    .nav a{display:block;padding:10px 12px;border-radius:10px;text-decoration:none;color:var(--ink-700);margin-bottom:4px}
+    .nav a.active{background:var(--bnk-red);color:#fff;font-weight:700}
+
+    main{padding:18px}
+    .section{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;margin-bottom:18px}
+    .section h2{margin:0 0 12px}
+
+    .grid{display:grid;gap:12px}
+    .grid.cols-2{grid-template-columns:1fr 1fr}
+    @media(max-width:1100px){.layout{grid-template-columns:1fr}.right{display:none}.left{display:none}.grid.cols-2{grid-template-columns:1fr}}
+
+    .form-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+    .field{display:flex;flex-direction:column;gap:6px}
+    .field label{font-size:12px;color:var(--ink-500)}
+    .field input,.field select,.field textarea{height:40px;border:1px solid var(--line);border-radius:10px;padding:0 10px}
+    .field textarea{height:90px;padding:10px;resize:vertical}
+    .full{grid-column:1/-1}
+
+    .btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 12px;border-radius:10px;border:1px solid var(--line);background:#fff;font-weight:600;text-decoration:none;color:var(--ink-900);cursor:pointer}
+    .btn.primary{background:var(--bnk-red);border-color:var(--bnk-red);color:#fff}
+    .btn.small{height:28px;font-size:12px}
+    .btnbar{display:flex;gap:8px;flex-wrap:wrap}
+
+    table{width:100%;border-collapse:collapse}
+    thead th{background:#fafbff;color:var(--ink-500);font-size:12px;text-align:left;padding:10px;border-bottom:1px solid var(--line)}
+    tbody td{padding:12px;border-bottom:1px solid var(--line)}
+    tbody tr:hover{background:#fafbff}
+    .tag{font-size:12px;padding:3px 8px;border-radius:999px;border:1px solid var(--line)}
+
+    .chart{height:260px;border:1px solid var(--line);border-radius:12px}
+
+    aside.right{background:#fff;border-left:1px solid var(--line);padding:18px}
+    .ai-box{border:1px solid var(--line);border-radius:12px;background:#fbfcff;padding:12px;margin-bottom:12px}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="title">BNK 예금·적금 확장형 관리자</div>
+    <div>관리자: <strong>Admin01</strong></div>
+  </header>
+
+  <div class="layout">
+    <!-- 좌측 내비 -->
+    <aside class="left">
+      <nav class="nav">
+        <a class="active" href="#">예금/적금 관리</a>
+        <a href="#">카드 관리</a>
+        <a href="#">퇴직연금 관리</a>
+        <a href="#">외환 관리</a>
+        <a href="#">펀드 관리</a>
+        <hr/>
+        <a href="#">AI Q&A 게시판</a>
+        <a href="#">오류코드 진단</a>
+        <a href="#">통계(ECharts)</a>
+      </nav>
+    </aside>
+
+    <!-- 메인 컨텐츠 -->
+    <main>
+      <!-- 필터 & 등록 -->
+      <section class="section">
+        <h2>상품 등록 · 확장 필드</h2>
+        <div class="form-grid">
+          <div class="field">
+            <label for="category">상품 대분류</label>
+            <select id="category">
+              <option>정기예금</option>
+              <option>자유적금</option>
+              <option>목표적금</option>
+              <option>세금우대형</option>
+              <option>ESG적금</option>
+              <option>모바일전용예금</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="productName">상품명</label>
+            <input id="productName" placeholder="예: BNK 더드림 정기예금" />
+          </div>
+          <div class="field">
+            <label for="rate">금리(연)</label>
+            <input id="rate" placeholder="예: 3.25%" />
+          </div>
+
+          <div class="field">
+            <label for="period">기간</label>
+            <select id="period">
+              <option>6개월</option>
+              <option selected>12개월</option>
+              <option>24개월</option>
+              <option>36개월</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="interestPaymentCycle">이자지급</label>
+            <select id="interestPaymentCycle">
+              <option>매월</option>
+              <option>분기</option>
+              <option selected>만기일시</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="interestType">이자방식</label>
+            <select id="interestType">
+              <option>단리</option>
+              <option>복리</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="minDeposit">최소 가입금액</label>
+            <input id="minDeposit" placeholder="예: 100,000" />
+          </div>
+          <div class="field">
+            <label for="maxDeposit">최대 한도</label>
+            <input id="maxDeposit" placeholder="예: 50,000,000" />
+          </div>
+          <div class="field">
+            <label for="joinTarget">가입 대상</label>
+            <select id="joinTarget">
+              <option>개인</option>
+              <option>청년</option>
+              <option>시니어</option>
+              <option>법인</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="taxType">세금 유형</label>
+            <select id="taxType">
+              <option>과세</option>
+              <option>비과세</option>
+              <option>세금우대</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="promotionTag">우대/이벤트</label>
+            <input id="promotionTag" placeholder="예: 신규, 급여이체, ESG" />
+          </div>
+          <div class="field full">
+            <label for="desc">상품 설명</label>
+            <textarea id="desc" placeholder="주요 혜택, 유의사항 등"></textarea>
+          </div>
+        </div>
+        <div class="btnbar" style="margin-top:10px">
+          <button class="btn" id="btnDraft">임시저장</button>
+          <button class="btn primary" id="btnRegister">등록</button>
+          <button class="btn" id="btnReset">초기화</button>
+        </div>
+      </section>
+
+      <!-- 목록 & 통계 -->
+      <div class="grid cols-2">
+        <section class="section">
+          <h2>상품 목록</h2>
+          <table id="productTable">
+            <thead>
+              <tr>
+                <th>상품ID</th><th>대분류</th><th>상품명</th><th>금리</th><th>기간</th><th>상태</th><th>관리</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>#D-1001</td><td>정기예금</td><td>BNK 더드림 정기예금</td><td>3.25%</td><td>12M</td><td><span class="tag">운영중</span></td>
+                <td><a class="btn small">수정</a> <a class="btn small">삭제</a></td>
+              </tr>
+              <tr>
+                <td>#S-1102</td><td>자유적금</td><td>BNK 청년희망 적금</td><td>4.10%</td><td>24M</td><td><span class="tag">승인대기</span></td>
+                <td><a class="btn small">수정</a> <a class="btn small">삭제</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section class="section">
+          <h2>상품군 통계</h2>
+          <div id="pieChart" class="chart" aria-label="상품군 점유율 차트"></div>
+          <div id="lineChart" class="chart" style="margin-top:10px" aria-label="월별 가입/해지"></div>
+        </section>
+      </div>
+    </main>
+
+    <!-- 우측 AI 패널 -->
+    <aside class="right">
+      <div class="ai-box">
+        <strong>AI 자동 요약</strong>
+        <div class="btnbar" style="margin-top:6px">
+          <button class="btn primary small" id="btnAiSummary">상품 설명 생성</button>
+          <button class="btn small" id="btnAiName">상품명 추천</button>
+        </div>
+        <div id="aiOut" style="margin-top:8px;font-size:13px"></div>
+      </div>
+      <div class="ai-box">
+        <strong>톤 변환</strong>
+        <div class="btnbar" style="margin-top:6px">
+          <button class="btn small" data-tone="formal">공식 톤</button>
+          <button class="btn small" data-tone="friendly">친근 톤</button>
+          <button class="btn small" data-tone="promo">프로모션 톤</button>
+        </div>
+      </div>
+      <div class="ai-box">
+        <strong>오류코드 진단(샘플)</strong>
+        <div style="font-size:13px">RULE-TERM-002: "만기해지 수수료" 약관 누락 가능</div>
+      </div>
+      <div class="ai-box" style="background:#fff;border-style:dashed">
+        <strong>OpenAI 키 설정</strong>
+        <div style="font-size:12px">아래 입력 후 사용(브라우저 CORS 방지용 프록시 권장)</div>
+        <input id="openaiKey" placeholder="sk-..." style="width:100%;margin-top:6px;height:36px;border:1px solid var(--line);border-radius:8px;padding:0 8px"/>
+      </div>
+    </aside>
+  </div>
+
+  <script>
+    /* -------------------- ECHARTS -------------------- */
+    const pie = echarts.init(document.getElementById('pieChart'));
+    pie.setOption({
+      tooltip:{trigger:'item'},
+      legend:{top:'bottom'},
+      series:[{type:'pie',radius:'60%',
+        data:[
+          {value:1048,name:'정기예금'},
+          {value:735,name:'자유적금'},
+          {value:580,name:'목표적금'},
+          {value:484,name:'세금우대형'},
+          {value:300,name:'모바일전용예금'}
+        ],
+        emphasis:{itemStyle:{shadowBlur:10,shadowOffsetX:0,shadowColor:'rgba(0,0,0,0.3)'}}
+      }]
+    });
+
+    const line = echarts.init(document.getElementById('lineChart'));
+    line.setOption({
+      tooltip:{trigger:'axis'},
+      legend:{data:['가입','해지']},
+      xAxis:{type:'category',data:['1월','2월','3월','4월','5월','6월']},
+      yAxis:{type:'value'},
+      series:[
+        {name:'가입',type:'line',data:[120,200,150,80,70,110],color:'#e6002d'},
+        {name:'해지',type:'line',data:[60,90,80,40,30,50],color:'#6b7280'}
+      ]
+    });
+
+    /* -------------------- OPENAI HELPERS -------------------- */
+    const keyInput = document.getElementById('openaiKey');
+    const aiOut = document.getElementById('aiOut');
+
+    async function callOpenAI(messages){
+      const key = keyInput.value?.trim();
+      if(!key){ aiOut.textContent = 'OpenAI API 키를 입력하세요.'; return null; }
+      try{
+        const res = await fetch('https://api.openai.com/v1/chat/completions',{
+          method:'POST',
+          headers:{'Content-Type':'application/json','Authorization':`Bearer ${key}`},
+          body:JSON.stringify({
+            model:'gpt-4o-mini',
+            messages
+          })
+        });
+        if(!res.ok){ throw new Error('HTTP '+res.status); }
+        const data = await res.json();
+        return data.choices?.[0]?.message?.content || '';
+      }catch(err){
+        aiOut.textContent = 'OpenAI 호출 실패: '+err.message+' (로컬 파일에서 호출 시 CORS 이슈가 있을 수 있음)';
+        return null;
+      }
+    }
+
+    document.getElementById('btnAiSummary').addEventListener('click', async ()=>{
+      aiOut.textContent = '요약 생성 중...';
+      const payload = {
+        name: document.getElementById('productName').value,
+        category: document.getElementById('category').value,
+        rate: document.getElementById('rate').value,
+        period: document.getElementById('period').value,
+        interestPaymentCycle: document.getElementById('interestPaymentCycle').value,
+        interestType: document.getElementById('interestType').value,
+        min: document.getElementById('minDeposit').value,
+        max: document.getElementById('maxDeposit').value,
+        joinTarget: document.getElementById('joinTarget').value,
+        taxType: document.getElementById('taxType').value,
+        promo: document.getElementById('promotionTag').value
+      };
+      const content = await callOpenAI([
+        {role:'system',content:'너는 은행 상품 담당자를 돕는 카피라이터다. 2문장 요약과 3개 핵심 bullet을 한국어로 출력한다.'},
+        {role:'user',content:`다음 상품을 고객 친화적으로 요약:
+${JSON.stringify(payload, null, 2)}`}
+      ]);
+      if(content) aiOut.textContent = content;
+    });
+
+    document.getElementById('btnAiName').addEventListener('click', async ()=>{
+      aiOut.textContent = '상품명 제안 생성 중...';
+      const category = document.getElementById('category').value;
+      const tone = '신뢰·안정·BNK 브랜드 감성';
+      const content = await callOpenAI([
+        {role:'system',content:'금융상품 네이밍 전문가로서 5개의 한국어 제안만 리스트로 제공한다.'},
+        {role:'user',content:`카테고리: ${category}, 톤: ${tone}`}
+      ]);
+      if(content) aiOut.textContent = content;
+    });
+
+    // 톤 변환 버튼
+    document.querySelectorAll('[data-tone]').forEach(btn=>{
+      btn.addEventListener('click', async ()=>{
+        const tone = btn.getAttribute('data-tone');
+        const base = document.getElementById('desc').value || '기본 상품 설명';
+        aiOut.textContent = '톤 변환 중...';
+        const content = await callOpenAI([
+          {role:'system',content:'문장 톤을 변환하는 카피라이터. 한국어로만 답한다.'},
+          {role:'user',content:`다음 설명을 ${tone} 톤으로 2문장으로: ${base}`}
+        ]);
+        if(content) aiOut.textContent = content;
+      });
+    });
+
+    /* -------------------- UI 보조 -------------------- */
+    document.getElementById('btnReset').addEventListener('click',()=>{
+      document.querySelectorAll('#productName,#rate,#minDeposit,#maxDeposit,#promotionTag,#desc').forEach(el=>el.value='');
+      aiOut.textContent = '';
+    });
+
+    document.getElementById('btnDraft').addEventListener('click',()=>{
+      alert('임시저장: 로컬 스토리지에 저장합니다. (데모)');
+      const data = {
+        category:category.value, name:productName.value, rate:rate.value, period:period.value,
+        interestPaymentCycle:interestPaymentCycle.value, interestType:interestType.value,
+        min:minDeposit.value, max:maxDeposit.value, joinTarget:joinTarget.value,
+        taxType:taxType.value, promo:promotionTag.value, desc:desc.value
+      };
+      localStorage.setItem('bnk_savings_draft', JSON.stringify(data));
+    });
+  </script>
+</body>
+</html>
