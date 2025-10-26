@@ -1,6 +1,4 @@
-from pathlib import Path
-
-readme_content = """# 🌐 BNK 3rd Project — Web Prototype Links
+ 
 
 ## 🤖 Chatbot Pages
 | Version | Link | Description |
@@ -31,7 +29,4 @@ readme_content = """# 🌐 BNK 3rd Project — Web Prototype Links
 > - **Card Page**: 금융상품 시각화 카드  
 > - **Admin Pages**: 내부 운영자용 금융상품 관리 화면(Mockup)
 """
-
-path = Path("/mnt/data/BNK_3rd_Project_Links.md")
-path.write_text(readme_content, encoding="utf-8")
-path
+ 
