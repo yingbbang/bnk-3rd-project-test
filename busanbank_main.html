@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BNK 부산은행 - 메인</title>
+  <style>
+    :root {
+      --bnk-red: #E60012;
+      --bnk-blue: #00B8D4;
+      --gray: #6b7280;
+      --line: #e5e7eb;
+      --bg: #fff;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background-color: var(--bg);
+      color: #111;
+    }
+
+    /* HEADER */
+    header {
+      border-bottom: 1px solid var(--line);
+      padding: 12px 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      height: 28px;
+    }
+
+    nav ul {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #222;
+      font-weight: 500;
+    }
+
+    nav a:hover {
+      color: var(--bnk-red);
+    }
+
+    /* BANNER */
+    .banner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 40px 5%;
+      background: #f9fafb;
+      gap: 40px;
+    }
+
+    .banner-left {
+      flex: 2;
+      background: url('https://cdn-icons-png.flaticon.com/512/463/463384.png') no-repeat center left/80px;
+      padding-left: 100px;
+    }
+
+    .banner-left h2 {
+      font-size: 26px;
+      color: var(--bnk-red);
+      margin-bottom: 12px;
+    }
+
+    .banner-left p {
+      color: var(--gray);
+      line-height: 1.6;
+    }
+
+    .banner-right {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      flex: 1;
+      align-items: flex-end;
+    }
+
+    .banner-btn {
+      color: #fff;
+      font-weight: 600;
+      text-align: center;
+      padding: 12px;
+      width: 200px;
+      border-radius: 6px;
+      text-decoration: none;
+    }
+
+    .btn-red { background: var(--bnk-red); }
+    .btn-black { background: #333; }
+    .btn-blue { background: var(--bnk-blue); }
+
+    /* CATEGORY */
+    .category {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin: 50px auto;
+      flex-wrap: wrap;
+      text-align: center;
+    }
+
+    .cat-item {
+      width: 180px;
+    }
+
+    .cat-item img {
+      width: 60px;
+      margin-bottom: 10px;
+    }
+
+    .cat-item h4 {
+      color: #111;
+      margin-bottom: 6px;
+    }
+
+    .cat-item p {
+      font-size: 14px;
+      color: var(--gray);
+    }
+
+    /* NEWS & EVENT */
+    .news-section {
+      display: flex;
+      justify-content: space-between;
+      padding: 40px 5%;
+      background: #fafafa;
+    }
+
+    .news, .event {
+      width: 48%;
+    }
+
+    .news h3, .event h3 {
+      border-bottom: 2px solid var(--bnk-red);
+      padding-bottom: 6px;
+      margin-bottom: 10px;
+    }
+
+    .news ul, .event ul {
+      list-style: none;
+      line-height: 1.8;
+      color: #333;
+    }
+
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .btn-small {
+      border: 1px solid #ccc;
+      background: #fff;
+      padding: 10px 18px;
+      border-radius: 6px;
+      font-size: 14px;
+      color: #222;
+      cursor: pointer;
+    }
+
+    .btn-small:hover {
+      border-color: var(--bnk-red);
+      color: var(--bnk-red);
+    }
+
+    /* FOOTER */
+    footer {
+      background: #f3f4f6;
+      padding: 40px 5%;
+      text-align: center;
+      color: #555;
+      font-size: 14px;
+      border-top: 1px solid #ddd;
+      line-height: 1.8;
+    }
+
+    footer a { color: var(--bnk-red); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img class="logo" src="https://www.busanbank.co.kr/ib20/mnu/images/logo_bnk.png" alt="BNK 부산은행 로고">
+    <nav>
+      <ul>
+        <li><a href="#">개인뱅킹</a></li>
+        <li><a href="#">기업뱅킹</a></li>
+        <li><a href="#">금융상품</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="banner">
+    <div class="banner-left">
+      <h2>민생지원 사칭 스미싱 주의!</h2>
+      <p>개인정보 유출 위험! 정부는 문자로 링크를 보내지 않습니다.<br>수상한 문자는 열지 말고 지우세요!</p>
+    </div>
+    <div class="banner-right">
+      <a href="#" class="banner-btn btn-red">빠른조회서비스</a>
+      <a href="#" class="banner-btn btn-black">사고분실신고</a>
+      <a href="#" class="banner-btn btn-blue">금융소비자보호</a>
+    </div>
+  </section>
+
+  <section class="category">
+    <div class="cat-item">
+      <img src="https://cdn-icons-png.flaticon.com/512/2583/2583045.png" alt="">
+      <h4>베스트상품</h4>
+      <p>온라인판매 TOP5</p>
+    </div>
+    <div class="cat-item">
+      <img src="https://cdn-icons-png.flaticon.com/512/3039/3039449.png" alt="">
+      <h4>목적별상품</h4>
+      <p>상황에 맞는 자금 관리</p>
+    </div>
+    <div class="cat-item">
+      <img src="https://cdn-icons-png.flaticon.com/512/4228/4228704.png" alt="">
+      <h4>생애주기별상품</h4>
+      <p>청소년기와 함께 해야하는</p>
+    </div>
+    <div class="cat-item">
+      <img src="https://cdn-icons-png.flaticon.com/512/921/921071.png" alt="">
+      <h4>고객별상품</h4>
+      <p>유아기부터 은퇴설계까지</p>
+    </div>
+    <div class="cat-item">
+      <img src="https://cdn-icons-png.flaticon.com/512/1484/1484510.png" alt="">
+      <h4>신규상품</h4>
+      <p>최근 6개월 이내 출시</p>
+    </div>
+  </section>
+
+  <section class="news-section">
+    <div class="news">
+      <h3>새소식</h3>
+      <ul>
+        <li>(임원평가지시스템(PIS) 노후화 교체 안내)</li>
+        <li>원활 공공기관 디지털금융업무 일시중단 안내</li>
+        <li>BNK행복누구나 적금 출시</li>
+      </ul>
+    </div>
+    <div class="event">
+      <h3>이벤트</h3>
+      <ul>
+        <li>디지털데스크 3주년 이벤트</li>
+        <li>라이프카드 혜택 UP-GRADE 이벤트</li>
+        <li>신상품 Get! 적립 Back!</li>
+      </ul>
+      <div class="btn-group">
+        <button class="btn-small">상품공시실</button>
+        <button class="btn-small">서식/약관자료실</button>
+        <button class="btn-small">금융소비자보호</button>
+        <button class="btn-small">고객센터</button>
+        <button class="btn-small">비교조회서비스</button>
+        <button class="btn-small">사고신고</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>개인정보처리방침 | 고객정보취급방침 | 전자금융이용자보호수칙 | 전자금융사기피해예방캠페인</p>
+    <p>고객센터 1588-6200, 1544-6200 | 해외 82-2-1588-6200</p>
+    <p>© 2014 BUSANBANK. ALL RIGHTS RESERVED.</p>
+  </footer>
+
+</body>
+</html>

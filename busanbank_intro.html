@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BNK 부산은행 - 은행소개</title>
+  <style>
+    :root {
+      --bnk-red: #E60012;
+      --gray: #6b7280;
+      --line: #e5e7eb;
+      --bg: #fff;
+    }
+
+    * {box-sizing: border-box; margin:0; padding:0;}
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background-color: var(--bg);
+      color: #111;
+    }
+
+    header {
+      border-bottom: 1px solid var(--line);
+      padding: 12px 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    header img.logo {
+      height: 28px;
+    }
+
+    nav ul {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #222;
+      font-weight: 500;
+    }
+
+    nav a:hover { color: var(--bnk-red); }
+
+    .main-hero {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 60px 5%;
+      background: linear-gradient(180deg,#fff,#f9fafb);
+    }
+
+    .hero-text h1 {
+      font-size: 40px;
+      font-weight: 700;
+      color: var(--bnk-red);
+      margin-bottom: 16px;
+    }
+
+    .hero-text p {
+      color: var(--gray);
+      font-size: 18px;
+    }
+
+    .hero-img img {
+      max-width: 400px;
+      border-radius: 8px;
+    }
+
+    .card-grid {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin: 60px auto;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      width: 200px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      transition: 0.2s;
+    }
+
+    .card:hover {
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      transform: translateY(-4px);
+    }
+
+    .card img {
+      width: 40px;
+      margin-bottom: 10px;
+    }
+
+    .notice-section {
+      background: #fafafa;
+      padding: 40px 5%;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .notice, .press {
+      width: 48%;
+    }
+
+    .notice h3, .press h3 {
+      border-bottom: 2px solid var(--bnk-red);
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+      font-size: 18px;
+    }
+
+    .notice ul, .press ul {
+      list-style: none;
+      color: #333;
+      line-height: 1.8;
+    }
+
+    footer {
+      background: #f3f4f6;
+      padding: 40px 5%;
+      text-align: center;
+      color: #555;
+      font-size: 14px;
+      border-top: 1px solid #ddd;
+    }
+
+    footer a { color: var(--bnk-red); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <header>
+    <img class="logo" src="https://www.busanbank.co.kr/ib20/mnu/images/logo_bnk.png" alt="BNK 부산은행 로고">
+    <nav>
+      <ul>
+        <li><a href="#">은행안내</a></li>
+        <li><a href="#">ESG경영</a></li>
+        <li><a href="#">BNK부산은행스토리</a></li>
+        <li><a href="#">투자자정보</a></li>
+        <li><a href="#">인재채용</a></li>
+        <li><a href="#">제휴사업</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="main-hero">
+    <div class="hero-text">
+      <h1>가장 신뢰받는 은행<br>BNK 부산은행!</h1>
+      <p>고객을 향한 단 하나의 진심,<br>진심으로 설계하는 마음가짐</p>
+    </div>
+    <div class="hero-img">
+      <img src="https://www.busanbank.co.kr/ib20/mnu/images/contents/img_intro_building.jpg" alt="부산은행 본점">
+    </div>
+  </section>
+
+  <section class="card-grid">
+    <div class="card">
+      <img src="https://cdn-icons-png.flaticon.com/512/5997/5997765.png" alt="">
+      <h4>사회공헌</h4>
+    </div>
+    <div class="card">
+      <img src="https://cdn-icons-png.flaticon.com/512/3039/3039449.png" alt="">
+      <h4>투자자 정보</h4>
+    </div>
+    <div class="card">
+      <img src="https://cdn-icons-png.flaticon.com/512/921/921071.png" alt="">
+      <h4>인재채용</h4>
+    </div>
+    <div class="card">
+      <img src="https://cdn-icons-png.flaticon.com/512/4140/4140037.png" alt="">
+      <h4>부은가족</h4>
+    </div>
+  </section>
+
+  <section class="notice-section">
+    <div class="notice">
+      <h3>공지사항</h3>
+      <ul>
+        <li>(임원평가지시스템(PIS) 노후화 교체 ...)</li>
+        <li>원활 공공기관 디지털금융업무 일시중단...</li>
+        <li>수신 신상품 BNK행복누구나 적금 출시...</li>
+      </ul>
+    </div>
+    <div class="press">
+      <h3>보도자료</h3>
+      <ul>
+        <li>BNK부산은행, 부산은행 육상실업 최강자...</li>
+        <li>BNK부산은행, 임직원 재능으로 지역사회...</li>
+        <li>BNK부산은행, 최대 연 2.6% '건이윤적금'...</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    <p>개인정보처리방침 | 고객정보취급방침 | 전자금융이용자보호수칙 | 전자금융사기피해예방캠페인</p>
+    <p>고객센터 1588-6200, 1544-6200 | 해외 82-2-1588-6200</p>
+    <p>© 2014 BUSANBANK. ALL RIGHTS RESERVED.</p>
+  </footer>
+</body>
+</html>

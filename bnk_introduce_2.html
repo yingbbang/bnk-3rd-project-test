@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BNK 부산은행 - 은행소개</title>
+<style>
+  :root {
+    --red: #d91a1a;
+    --dark: #2b2f36;
+    --gray: #6b7280;
+    --bg: #ffffff;
+    --card: #fafafa;
+    --line: #e5e7eb;
+  }
+
+  body {
+    margin: 0;
+    font-family: "Noto Sans KR", sans-serif;
+    background: var(--bg);
+    color: var(--dark);
+    line-height: 1.6;
+  }
+
+  main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+  }
+
+  /* Hero Section */
+  .hero {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 40px;
+  }
+  .hero-text {
+    flex: 1 1 400px;
+  }
+  .hero-text h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+  }
+  .hero-text p {
+    font-size: 1rem;
+    color: var(--gray);
+  }
+  .hero-img {
+    flex: 1 1 400px;
+    text-align: right;
+  }
+  .hero-img img {
+    width: 100%;
+    max-width: 540px;
+    border-radius: 8px;
+  }
+
+  /* Category Cards */
+  .category-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .category {
+    text-align: center;
+    background: var(--card);
+    padding: 24px 16px;
+    border-right: 1px solid var(--line);
+  }
+  .category:last-child {
+    border-right: none;
+  }
+  .category img {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 8px;
+  }
+  .category h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+
+  /* Info Section */
+  .info-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: 1px solid var(--line);
+  }
+  .info {
+    padding: 20px;
+  }
+  .info:not(:last-child) {
+    border-right: 1px solid var(--line);
+  }
+  .info h4 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .info h4::before {
+    content: ">";
+    color: var(--red);
+    margin-right: 6px;
+  }
+  .info ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .info li {
+    border-bottom: 1px solid var(--line);
+    padding: 8px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .info li:last-child {
+    border-bottom: none;
+  }
+  .info a {
+    text-decoration: none;
+    color: var(--dark);
+    font-weight: 500;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    flex: 1;
+  }
+  .new {
+    color: var(--red);
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-left: 8px;
+  }
+
+  @media (max-width: 992px) {
+    .category-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .info-wrap {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .hero {
+      flex-direction: column;
+      text-align: center;
+    }
+    .hero-img {
+      text-align: center;
+    }
+  }
+</style>
+</head>
+<body>
+
+<main>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-text">
+      <h1>가장 신뢰받는 은행<br>BNK 부산은행!</h1>
+      <p>고객을 향한 단 하나의 진심<br>진심으로 설계하는 마음가짐</p>
+    </div>
+    <div class="hero-img">
+      <img src="https://www.busanbank.co.kr/img/main_visual.jpg" alt="BNK 부산은행 본사 전경" />
+    </div>
+  </section>
+
+  <!-- Category Grid -->
+  <section class="category-grid">
+    <div class="category">
+      <img src="https://cdn-icons-png.flaticon.com/512/3524/3524388.png" alt="사회공헌">
+      <h3>사회공헌</h3>
+    </div>
+    <div class="category">
+      <img src="https://cdn-icons-png.flaticon.com/512/3597/3597086.png" alt="투자자 정보">
+      <h3>투자자 정보</h3>
+    </div>
+    <div class="category">
+      <img src="https://cdn-icons-png.flaticon.com/512/1450/1450338.png" alt="인재채용">
+      <h3>인재채용</h3>
+    </div>
+    <div class="category">
+      <img src="https://cdn-icons-png.flaticon.com/512/3565/3565633.png" alt="부은가족">
+      <h3>부은가족</h3>
+    </div>
+  </section>
+
+  <!-- Notice & News -->
+  <section class="info-wrap">
+    <div class="info">
+      <h4>공지사항</h4>
+      <ul>
+        <li><a href="#">(오픈소스 소프트웨어 관리시스템 구축)...</a><span class="new">N</span></li>
+        <li><a href="#">(기업뱅킹 법인 비대면실명확인 프로세스)...</a><span class="new">N</span></li>
+        <li><a href="#">(침입방지시스템(IPS) 노후화 교체)...</a><span class="new">N</span></li>
+      </ul>
+    </div>
+    <div class="info">
+      <h4>보도자료</h4>
+      <ul>
+        <li><a href="#">BNK부산은행, 서민금융 대표상품 ‘새희망홀씨’ 출시...</a><span class="new">N</span></li>
+        <li><a href="#">BNK부산은행, 부산은행 육상실업 최기만 선수 후원...</a><span class="new">N</span></li>
+        <li><a href="#">BNK부산은행, 임직원 재능으로 지역과 상생...</a><span class="new">N</span></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+</body>
+</html>

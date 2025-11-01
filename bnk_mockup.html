@@ -1,0 +1,320 @@
+# Create a self-contained HTML preview file for the BNK Shopping Mall main page (1920x1080 layout).
+html_content = r"""<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BNK 부산은행 쇼핑몰 – 메인</title>
+  <style>
+    :root{
+      --bnk-red:#E60012;
+      --ink:#222;
+      --muted:#6b7280;
+      --line:#e5e7eb;
+      --bg:#ffffff;
+      --card:#f9fafb;
+      --badge:#e8f1ff;
+      --hit:#fef3c7;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      color:var(--ink);
+      background:var(--bg);
+    }
+
+    /* Global layout: centered up to 1600, but designed for 1920 canvas */
+    .wrap{max-width:1600px;margin:0 auto;padding:0 24px}
+    .divider{border-top:1px solid var(--line)}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:8px;border:1px solid var(--line);background:#fff;cursor:pointer;font-weight:600}
+    .btn.primary{background:var(--bnk-red);border-color:var(--bnk-red);color:#fff}
+    .badge{display:inline-block;padding:2px 8px;border-radius:999px;background:var(--badge);font-size:12px}
+    .price-old{color:#9ca3af;text-decoration:line-through}
+    .price-new{color:var(--bnk-red);font-weight:800}
+    .section{padding:32px 0}
+    h2.section-title{margin:0 0 16px;font-size:22px}
+    .grid{display:grid;gap:20px}
+
+    /* Header */
+    .header-top{
+      border-bottom:4px solid var(--bnk-red);
+      background:#fff;
+      position:sticky;top:0;z-index:50;
+    }
+    .header-row{display:flex;align-items:center;gap:24px;height:72px}
+    .logo{font-weight:900;color:var(--bnk-red);letter-spacing:0.2px}
+    nav.main{margin-left:24px;display:flex;gap:28px;font-weight:600}
+    nav.main a{color:#4b5563;text-decoration:none;padding:6px 0;position:relative}
+    nav.main a.active{color:var(--bnk-red)}
+    nav.main a.active::after{
+      content:"";position:absolute;left:0;right:0;bottom:-18px;height:3px;background:var(--bnk-red);
+    }
+    .header-actions{margin-left:auto;display:flex;align-items:center;gap:14px;color:#4b5563}
+    .search{
+      display:flex;align-items:center;border:1px solid var(--line);border-radius:10px;padding:8px 10px;gap:8px;min-width:320px;
+      background:#fff;
+    }
+    .search input{border:none;outline:none;width:100%;font-size:14px;background:transparent}
+    .icon{width:18px;height:18px;display:inline-block}
+    .icon.search{background:conic-gradient(from 90deg at 50% 50%, #0000 0 25%, #9ca3af 0 100%);-webkit-mask:
+      radial-gradient(circle 6px at 40% 40%,#000 98%,#0000 101%),
+      linear-gradient(#000 0 0) center/8px 2px no-repeat;
+    }
+
+    /* Hero Banner */
+    .hero{padding:28px 0 20px}
+    .banner{
+      position:relative;border-radius:14px;overflow:hidden;background:linear-gradient(90deg,#f3f4f6,#fff);
+      height:400px;
+      display:flex;align-items:center;
+    }
+    .banner .slide{
+      position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+      font-size:46px;font-weight:800;color:#c7cbd3;letter-spacing:2px;opacity:0;transition:opacity .4s ease;
+    }
+    .banner .slide.active{opacity:1}
+    .banner .nav{
+      position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 12px;pointer-events:none;
+    }
+    .banner .arrow{width:42px;height:42px;border-radius:999px;background:#ffffffcc;border:1px solid var(--line);display:grid;place-items:center;font-weight:900;pointer-events:auto;cursor:pointer}
+    .dots{position:absolute;left:0;right:0;bottom:12px;display:flex;justify-content:center;gap:8px}
+    .dot{width:10px;height:10px;border-radius:999px;background:#d1d5db}
+    .dot.active{background:var(--bnk-red)}
+
+    /* Body with sidebar */
+    .body{
+      display:grid;
+      grid-template-columns:220px 1fr;
+      gap:28px;
+    }
+    aside{
+      background:#fafafa;border:1px solid var(--line);border-radius:12px;padding:16px;height:max-content;position:sticky;top:92px;
+    }
+    aside h3{margin:6px 0 12px;font-size:16px}
+    .cat{display:flex;flex-direction:column;gap:8px}
+    .cat button{height:40px;border-radius:8px;border:1px solid var(--line);background:#fff;text-align:left;padding:0 12px;cursor:pointer}
+    .cat button:hover{background:#f3f4f6}
+
+    /* Product cards */
+    .cards{grid-template-columns:repeat(3, minmax(0,1fr))}
+    .cards-4{grid-template-columns:repeat(4, minmax(0,1fr))}
+    .card{
+      background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column
+    }
+    .thumb{
+      height:200px;background:repeating-conic-gradient(#eef 0 25%, #dde 0 50%) 50%/40px 40px;
+      display:grid;place-items:center;color:#9ca3af;font-weight:800
+    }
+    .card .body{display:block;padding:12px}
+    .meta{display:flex;align-items:center;gap:8px;margin-top:6px;font-size:13px;color:#6b7280}
+    .free{background:#e8f7ee;color:#0a7a2f;border-radius:999px;padding:2px 8px;font-size:12px;border:1px solid #c7ead3}
+    .row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+
+    /* Footer */
+    footer{background:#f8f9fb;border-top:1px solid var(--line);margin-top:40px}
+    .footer-grid{
+      display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;padding:28px 0;color:#6b7280;font-size:14px
+    }
+    .copy{border-top:1px solid var(--line);padding:16px 0;color:#9aa1ac;font-size:13px}
+
+    /* Responsive tweaks */
+    @media (max-width: 1280px){
+      .wrap{max-width:1100px}
+      .cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .cards-4{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .hero .banner{height:320px}
+      .body{grid-template-columns:200px 1fr}
+    }
+    @media (max-width: 920px){
+      .body{grid-template-columns:1fr}
+      aside{position:relative;top:auto}
+      .search{min-width:0}
+      .hero .banner{height:240px}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header-top">
+    <div class="wrap header-row">
+      <div class="logo">BNK 부산은행</div>
+      <nav class="main">
+        <a href="#">예금</a>
+        <a href="#">펀드</a>
+        <a href="#">외환</a>
+        <a href="#">카드</a>
+        <a href="#">보험</a>
+        <a href="#">퇴직연금</a>
+        <a href="#" class="active">쇼핑몰</a>
+      </nav>
+      <div class="header-actions">
+        <div class="search">
+          <span class="icon search" aria-hidden="true"></span>
+          <input placeholder="상품 검색" aria-label="상품 검색" />
+        </div>
+        <span>🌐</span>
+        <span>👤</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero / Banner -->
+  <section class="hero wrap">
+    <div class="banner" id="banner">
+      <div class="slide active">PROMO BANNER 01</div>
+      <div class="slide">PROMO BANNER 02</div>
+      <div class="slide">PROMO BANNER 03</div>
+      <div class="slide">PROMO BANNER 04</div>
+      <div class="slide">PROMO BANNER 05</div>
+      <div class="nav">
+        <button class="arrow" id="prev" aria-label="이전">‹</button>
+        <button class="arrow" id="next" aria-label="다음">›</button>
+      </div>
+      <div class="dots" id="dots"></div>
+    </div>
+  </section>
+
+  <!-- Body with Sidebar + Product Sections -->
+  <main class="wrap body">
+    <aside>
+      <h3>상품 카테고리</h3>
+      <div class="cat">
+        <button>패션 · 의류 · 뷰티</button>
+        <button>가전 · 디지털</button>
+        <button>식품 · 생활용품</button>
+        <button>홈 · 인테리어 · 취미</button>
+      </div>
+    </aside>
+
+    <section>
+      <!-- Tabs -->
+      <div class="row" style="margin-bottom:12px">
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn primary">히트상품</button>
+          <button class="btn">추천상품</button>
+          <button class="btn">최신상품</button>
+          <button class="btn">인기상품</button>
+          <button class="btn">할인상품</button>
+        </div>
+        <button class="btn">전체보기</button>
+      </div>
+
+      <!-- Best Items -->
+      <section class="section">
+        <h2 class="section-title">베스트 상품</h2>
+        <div class="grid cards">
+          <!-- 6 sample cards -->
+          """ + "\n".join([f"""
+          <article class='card'>
+            <div class='thumb'>IMAGE</div>
+            <div class='body'>
+              <div>상품명 {i+1}</div>
+              <div class='meta'>
+                <span class='price-old'>84,000원</span>
+                <span class='price-new'>27,000원</span>
+                <span class='badge'>10%↓</span>
+                <span class='free'>무료배송</span>
+              </div>
+            </div>
+          </article>""" for i in range(6)]) + """
+        </div>
+      </section>
+
+      <!-- Hit Items -->
+      <section class="section">
+        <h2 class="section-title">히트상품</h2>
+        <div class="grid cards-4">
+          """ + "\n".join([f"""
+          <article class='card'>
+            <div class='thumb'>IMAGE</div>
+            <div class='body'>
+              <div>히트상품 {i+1}</div>
+              <div class='meta'>
+                <span class='price-old'>69,000원</span>
+                <span class='price-new'>29,000원</span>
+                <span class='badge'>15%↓</span>
+                <span class='free'>무료배송</span>
+              </div>
+            </div>
+          </article>""" for i in range(4)]) + """
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="wrap footer-grid">
+      <div>
+        <div style="font-weight:800;color:var(--bnk-red)">BNK</div>
+        <p>고객과 함께 성장하는 부산은행, 신뢰할 수 있는 대표 은행</p>
+      </div>
+      <div>
+        <strong>고객지원</strong>
+        <ul>
+          <li>운영시간</li>
+          <li>지점찾기</li>
+          <li>FAQ</li>
+        </ul>
+      </div>
+      <div>
+        <strong>서비스</strong>
+        <ul>
+          <li>인터넷뱅킹</li>
+          <li>모바일뱅킹</li>
+          <li>퇴직연금</li>
+        </ul>
+      </div>
+      <div>
+        <strong>약관 및 정책</strong>
+        <ul>
+          <li>이용약관</li>
+          <li>개인정보처리방침</li>
+          <li>전자금융거래약관</li>
+        </ul>
+        <div style="margin-top:10px"><span class="badge">BNK 쇼핑몰 고객센터 1588-6200</span></div>
+      </div>
+    </div>
+    <div class="wrap copy">© 2025 BNK 부산은행. All rights reserved.</div>
+  </footer>
+
+  <script>
+    // Simple banner slider
+    const slides = Array.from(document.querySelectorAll('#banner .slide'));
+    const dotsWrap = document.getElementById('dots');
+    let index = 0, timer;
+
+    // build dots
+    slides.forEach((_, i)=>{
+      const d = document.createElement('div');
+      d.className = 'dot' + (i===0 ? ' active':'');
+      d.addEventListener('click', ()=>go(i));
+      dotsWrap.appendChild(d);
+    });
+    const dots = Array.from(dotsWrap.children);
+
+    function go(i){
+      slides[index].classList.remove('active');
+      dots[index].classList.remove('active');
+      index = (i + slides.length) % slides.length;
+      slides[index].classList.add('active');
+      dots[index].classList.add('active');
+      play();
+    }
+    function play(){
+      clearInterval(timer);
+      timer = setInterval(()=>go(index+1), 3000);
+    }
+    document.getElementById('prev').onclick = ()=>go(index-1);
+    document.getElementById('next').onclick = ()=>go(index+1);
+    play();
+  </script>
+</body>
+</html>
+"""
+with open("/mnt/data/bnk-shopping-mall.html","w",encoding="utf-8") as f:
+    f.write(html_content)
+"/mnt/data/bnk-shopping-mall.html"

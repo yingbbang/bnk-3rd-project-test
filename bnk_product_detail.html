@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>상품 상세 – BNK 쇼핑몰</title>
+<link rel="stylesheet" href="bnk-style.css">
+<style>
+body{font-family:"Noto Sans KR",sans-serif;margin:0;color:#222;background:#fff}
+.wrap{max-width:1200px;margin:0 auto;padding:40px 24px}
+.product-detail{display:grid;grid-template-columns:500px 1fr;gap:48px;margin-top:40px}
+.product-image{border:1px solid #eee;border-radius:12px;overflow:hidden;height:500px;display:grid;place-items:center;background:#fafafa}
+.info h1{font-size:26px;margin:0 0 16px}
+.price{font-size:24px;font-weight:700;color:#E60012;margin-bottom:16px}
+.price .old{color:#999;text-decoration:line-through;margin-right:8px}
+.option{margin-bottom:20px}
+.btn-group{display:flex;gap:12px;margin-top:24px}
+.desc-tabs{margin-top:60px;border-top:1px solid #e5e7eb}
+.tabs{display:flex;gap:20px;padding:12px 0;border-bottom:1px solid #e5e7eb}
+.tabs button{background:none;border:none;padding:8px 16px;cursor:pointer;font-weight:600}
+.tabs button.active{color:#E60012;border-bottom:3px solid #E60012}
+.tab-content{padding:24px 0;color:#555;line-height:1.6}
+</style>
+</head>
+<body>
+<header class="header-top">...BNK 공통 헤더...</header>
+
+<main class="wrap">
+  <div class="product-detail">
+    <div class="product-image">이미지 영역</div>
+    <div class="info">
+      <h1>프리미엄 가죽 카드지갑</h1>
+      <div class="price"><span class="old">59,000원</span> 39,000원</div>
+      <div class="option">
+        <label>색상 선택</label><br>
+        <select><option>블랙</option><option>브라운</option><option>와인</option></select>
+      </div>
+      <div class="option">
+        <label>수량</label><br>
+        <input type="number" value="1" min="1" style="width:80px">
+      </div>
+      <div class="btn-group">
+        <button class="btn primary">장바구니 담기</button>
+        <button class="btn">바로 구매</button>
+      </div>
+    </div>
+  </div>
+
+  <section class="desc-tabs">
+    <div class="tabs">
+      <button class="active">상세정보</button>
+      <button>리뷰 (12)</button>
+      <button>배송/교환/환불</button>
+    </div>
+    <div class="tab-content">
+      프리미엄 소가죽으로 제작된 BNK 한정판 카드지갑입니다.<br>
+      부산은행 고객 전용 컬렉션으로, 내구성과 디자인을 모두 잡았습니다.
+    </div>
+  </section>
+</main>
+
+<footer>...BNK 공통 푸터...</footer>
+</body>
+</html>
