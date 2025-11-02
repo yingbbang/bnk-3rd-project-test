@@ -1,0 +1,431 @@
+
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>공지사항 | BNK 부산은행 스토리</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/assets/css/common.css">
+  <style>
+    body {
+      font-family: "Pretendard", "Noto Sans KR", sans-serif;
+      margin: 0;
+      background-color: #fff;
+      color: #333;
+    }
+
+    main {
+      display: flex;
+      max-width: 1100px;
+      margin: 60px auto;
+      gap: 40px;
+      padding: 0 20px;
+    }
+
+    /* ===== 왼쪽 사이드바 ===== */
+    .sidebar {
+      width: 250px;
+      border-right: 1px solid #e5e5e5;
+      padding-right: 25px;
+    }
+
+    .sidebar-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      border-bottom: 2px solid #000;
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+    }
+
+    .sidebar-menu ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .sidebar-menu > ul > li {
+      margin-bottom: 10px;
+    }
+
+    .sidebar-menu a {
+      text-decoration: none;
+      color: #333;
+      font-size: 0.95rem;
+      display: block;
+      padding: 4px 0;
+    }
+
+    .sidebar-menu a:hover {
+      color: #d91a1a;
+    }
+
+    .sidebar-menu .active > a {
+      font-weight: 700;
+      color: #d91a1a;
+    }
+
+    .submenu {
+      margin-left: 12px;
+    }
+
+    .submenu a {
+      color: #555;
+    }
+
+    .submenu .current {
+      font-weight: 700;
+      color: #d91a1a;
+    }
+
+    /* Best View */
+    .best-view {
+      border-top: 2px solid #d91a1a;
+      margin-top: 25px;
+      padding-top: 10px;
+    }
+
+    .best-view h3 {
+      color: #d91a1a;
+      font-size: 0.95rem;
+      margin-bottom: 10px;
+    }
+
+    .best-view ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .best-view li {
+      font-size: 0.9rem;
+      color: #444;
+      margin: 6px 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .best-view a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .best-view a:hover {
+      color: #d91a1a;
+    }
+
+    /* 검색창 */
+    .search-box {
+      display: flex;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-top: 16px;
+    }
+
+    .search-box input {
+      flex: 1;
+      border: none;
+      padding: 6px 8px;
+      outline: none;
+    }
+
+    .search-btn {
+      background: #fff;
+      border: none;
+      padding: 0 10px;
+      cursor: pointer;
+    }
+
+    /* POSTS 박스 */
+    .post-box {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #444;
+      color: #fff;
+      padding: 8px 12px;
+      border-radius: 4px;
+      margin: 20px 0;
+    }
+
+    .post-title {
+      font-size: 0.9rem;
+    }
+
+    .post-count {
+      font-weight: 600;
+    }
+
+    /* 영업점 안내 배너 */
+    .bnk-banner {
+      text-align: center;
+    }
+
+    .bnk-banner img {
+      width: 100%;
+      border-radius: 6px;
+      margin-bottom: 6px;
+    }
+
+    /* 하단 아이콘 영역 */
+    .sidebar-icons {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .sidebar-icons div {
+      font-size: 0.8rem;
+      color: #555;
+    }
+
+    .sidebar-icons img {
+      width: 24px;
+      height: 24px;
+      margin-bottom: 4px;
+    }
+
+    /* ===== 오른쪽 공지 상세 ===== */
+    .notice-detail {
+      flex: 1;
+      padding: 20px 0 60px;
+    }
+
+    .page-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .page-sub {
+      color: #777;
+      margin-bottom: 24px;
+    }
+
+    .notice-header {
+      border-top: 2px solid #d91a1a;
+      border-bottom: 1px solid #ddd;
+      padding: 16px 0;
+    }
+
+    .notice-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .notice-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    .notice-meta span + span {
+      margin-left: 20px;
+    }
+
+    .sns-share img {
+      width: 22px;
+      height: 22px;
+      margin-left: 8px;
+      cursor: pointer;
+      vertical-align: middle;
+    }
+
+    .notice-body {
+      line-height: 1.8;
+      padding: 25px 0 40px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .notice-body h3 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .notice-body a {
+      color: #0066cc;
+      text-decoration: none;
+    }
+
+    .notice-body a:hover {
+      text-decoration: underline;
+    }
+
+    .notice-nav {
+      margin-top: 20px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 20px;
+    }
+
+    .notice-nav p {
+      font-size: 0.95rem;
+      margin: 10px 0;
+      padding: 8px 0;
+      border-top: 1px solid #f0f0f0;
+    }
+
+    .notice-nav p:first-child {
+      border-top: 2px solid #d91a1a;
+    }
+
+    .notice-nav span {
+      color: #555;
+      font-weight: 600;
+      margin-right: 6px;
+    }
+
+    .notice-nav a {
+      text-decoration: none;
+      color: #333;
+      transition: color 0.2s;
+    }
+
+    .notice-nav a:hover {
+      color: #d91a1a;
+    }
+
+    .btn-area {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .btn-list {
+      display: inline-block;
+      padding: 8px 24px;
+      background: #fafafa;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      text-decoration: none;
+      color: #333;
+      transition: background 0.2s;
+    }
+
+    .btn-list:hover {
+      background: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+  <div id="header"></div>
+
+  <main>
+    <!-- 왼쪽 사이드바 -->
+    <aside class="sidebar">
+      <h2 class="sidebar-title">BNK 부산은행스토리</h2>
+      <nav class="sidebar-menu">
+        <ul>
+          <li class="active">
+            <a href="#">BNK 부산은행뉴스</a>
+            <ul class="submenu">
+              <li><a href="#">보도자료</a></li>
+              <li><a href="#" class="current">공지사항</a></li>
+              <li><a href="#">이벤트</a></li>
+            </ul>
+          </li>
+          <li><a href="#">홍보센터</a></li>
+          <li><a href="#">CI/캐릭터소개</a></li>
+          <li><a href="#">사회공헌(행복한BNK)</a></li>
+        </ul>
+      </nav>
+
+      <section class="best-view">
+        <h3>Best View</h3>
+        <ul>
+          <li><a href="#">학원비 결제하고 3만원 받자...</a></li>
+          <li><a href="#">원전님, 3만원 상품권 받으...</a></li>
+          <li><a href="#">뱅뱅체크카드 출시!</a></li>
+          <li><a href="#">송도해상 케이블카 탑승권 할...</a></li>
+          <li><a href="#">같이타면 캐시백! 청약통장 ...</a></li>
+        </ul>
+      </section>
+
+      <div class="search-box">
+        <input type="text" placeholder="검색어를 입력하세요.">
+        <button class="search-btn">🔍</button>
+      </div>
+
+      <div class="post-box">
+        <div class="post-title">POSTS</div>
+        <div class="post-count">68</div>
+      </div>
+
+      <div class="bnk-banner">
+        <img src="/assets/img/bnk_branch_info.png" alt="부산은행 영업점안내">
+        <p>부산은행 영업점안내</p>
+      </div>
+
+      <div class="sidebar-icons">
+        <div><img src="/assets/img/icon_talk.png" alt="Talk상담"><p>Talk상담</p></div>
+        <div><img src="/assets/img/icon_mail.png" alt="메일상담"><p>메일상담</p></div>
+        <div><img src="/assets/img/icon_faq.png" alt="FAQ"><p>FAQ</p></div>
+      </div>
+    </aside>
+
+    <!-- 오른쪽 공지사항 본문 -->
+    <section class="notice-detail">
+      <h1 class="page-title">공지사항</h1>
+      <p class="page-sub">부산은행의 생생한 소식을 전해 드립니다.</p>
+
+      <div class="notice-header">
+        <h2 class="notice-title">(DB접근제어시스템 일괄구매(ULA)) 입찰공고 안내</h2>
+        <div class="notice-meta">
+          <div>
+            <span>등록일 : 2025-10-28</span>
+            <span>조회수 : 159</span>
+          </div>
+          <div class="sns-share">
+            <img src="/assets/img/icon_facebook.png" alt="페이스북 공유">
+            <img src="/assets/img/icon_twitter.png" alt="트위터 공유">
+          </div>
+        </div>
+      </div>
+
+      <div class="notice-body">
+        <h3>(DB접근제어시스템 일괄구매(ULA)) 입찰공고 안내</h3>
+        <p><strong>1. 입찰건명 :</strong> DB접근제어시스템 일괄구매(ULA)</p>
+        <p><strong>2. 입찰관련 주요내용</strong><br>
+          가. 입찰참가서류 제출 및 마감일시 : <b>2025.11.07(금요일), 15:00</b><br>
+          나. 입찰일시 : <b>2025.11.10(월요일) 16:00</b><br>
+          다. 입찰방법 : <b>일반경쟁입찰</b><br>
+          라. 입찰관련 세부사항<br>
+          ※ BNK금융그룹 통합구매시스템 (<a href="https://eps.bnksys.co.kr" target="_blank">https://eps.bnksys.co.kr</a>) 참조<br>
+          마. 입찰관련 문의<br>
+          - BNK시스템 통합구매부 (Tel: 051-602-1739)
+        </p>
+      </div>
+
+      <div class="notice-nav">
+        <p class="prev">
+          <span>이전글 :</span>
+          <a href="#">더(The)튼튼 정기예금 금리 변경 안내</a>
+        </p>
+        <p class="next">
+          <span>다음글 :</span>
+          <a href="#">퇴직연금 운용관리/자산관리신탁계약서 개정 안내</a>
+        </p>
+      </div>
+
+      <div class="btn-area">
+        <a href="#" class="btn-list">목록</a>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer"></div>
+
+  <script>
+    fetch('/layouts/header.html')
+      .then(res => res.text())
+      .then(data => document.getElementById('header').innerHTML = data);
+
+    fetch('/layouts/footer.html')
+      .then(res => res.text())
+      .then(data => document.getElementById('footer').innerHTML = data);
+  </script>
+</body>
+</html>
