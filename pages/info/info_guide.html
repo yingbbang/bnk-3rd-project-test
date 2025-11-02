@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CEO 인사말 | BNK부산은행</title>
+  <style>
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background-color: #fff;
+      margin: 0;
+      padding: 0;
+      color: #222;
+      line-height: 1.7;
+    }
+
+    main {
+      max-width: 1000px;
+      margin: 60px auto;
+      padding: 0 20px;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: #111;
+    }
+
+    .subtitle {
+      font-size: 0.95rem;
+      color: #666;
+      margin-bottom: 40px;
+    }
+
+    .quote {
+      font-size: 1.3rem;
+      font-weight: 600;
+      border-left: 4px solid #d91a1a;
+      padding-left: 14px;
+      margin-bottom: 40px;
+    }
+
+    .ceo-section {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+
+    .ceo-info {
+      flex: 1 1 60%;
+    }
+
+    .ceo-profile {
+      flex: 1 1 35%;
+      text-align: center;
+    }
+
+    .ceo-profile img {
+      width: 240px;
+      border-radius: 6px;
+    }
+
+    .ceo-name {
+      margin-top: 12px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #222;
+    }
+
+    .ceo-title {
+      font-size: 0.95rem;
+      color: #666;
+    }
+
+    .profile-list {
+      margin-top: 20px;
+      text-align: left;
+      font-size: 0.9rem;
+      color: #444;
+      line-height: 1.6;
+    }
+
+    .profile-list strong {
+      display: block;
+      font-weight: 600;
+      color: #555;
+      margin-bottom: 5px;
+    }
+
+    .message-section {
+      margin-top: 60px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+
+    .message-section p {
+      margin-bottom: 16px;
+      color: #333;
+    }
+
+    .message-section strong {
+      color: #111;
+      font-weight: 600;
+    }
+
+    .thank {
+      margin-top: 30px;
+      text-align: right;
+      font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+      .ceo-section {
+        flex-direction: column;
+        align-items: center;
+      }
+      .ceo-info {
+        order: 2;
+        text-align: center;
+      }
+      .ceo-profile {
+        order: 1;
+        margin-bottom: 20px;
+      }
+      .message-section {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>CEO 인사말</h1>
+    <div class="subtitle">부산은행 CEO의 인사말을 전합니다.</div>
+
+    <div class="quote">
+      “고객과 지역사회의 든든한 동반자가 되어, 금융의 새로운 미래를 만들어가겠습니다.”
+    </div>
+
+    <div class="ceo-section">
+      <div class="ceo-info">
+        <p class="ceo-name">부산은행 CEO <strong>방성빈</strong></p>
+      </div>
+      <div class="ceo-profile">
+        <img src="./assets/img/ceo_bangseongbin.png" alt="부산은행 CEO 방성빈">
+        <div class="profile-list">
+          <strong>주요경력 Profile</strong>
+          1998년 부산은행 입행<br>
+          2009년 부산은행 경영혁신부장<br>
+          2010년 부산은행 영업추진부장<br>
+          2013년 부산은행 영업지원팀장<br>
+          2014년 부산은행 경남사업부장<br>
+          2016년 부산은행 본점사업부장<br>
+          2018년 부산은행 경영기획본부장(상무)<br>
+          2020년 부산은행 경영기획그룹대표(부행장보)<br>
+          2021년 BNK금융지주 경영기획본부장(부사장)<br>
+          2023년 現부산은행 제14대 은행장
+        </div>
+      </div>
+    </div>
+
+    <div class="message-section">
+      <div>
+        <p><strong>부산은행을 아껴주시는 고객 여러분께 감사드립니다.</strong></p>
+        <p>지난 1967년, 지역경제 활성화를 사명으로 출발한 부산은행은 대한민국 지역금융의 새로운 장을 열어가고 있습니다.</p>
+        <p><strong>도전과 변화, 바른 금융으로 고객과 함께 성장하겠습니다.</strong></p>
+        <p>고객을 위한 최고의 은행이 되기 위해 끊임없이 혁신하고, 바르게 생각하고 함께 행동하는 바른 금융을 실천하며 고객과 함께 미래로 나아가겠습니다.</p>
+      </div>
+      <div>
+        <p><strong>더 좋은 사회, 더 나은 내일을 위한 노력을 아끼지 않겠습니다.</strong></p>
+        <p>지금까지 그래왔듯이, 고객과 지역사회의 든든한 동반자로서 따뜻한 금융을 실천하며 더 좋은 사회, 더 나은 내일을 만드는 데 앞장서겠습니다.</p>
+        <p class="thank">감사합니다.</p>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
