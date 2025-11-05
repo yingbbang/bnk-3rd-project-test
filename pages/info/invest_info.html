@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>투자정보 - 경영공시</title>
+  <style>
+    body {
+      font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
+      background-color: #fff;
+      margin: 0;
+      color: #111;
+    }
+
+    .container {
+      display: flex;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Aside */
+    .sidebar {
+      width: 220px;
+      border-right: 1px solid #e5e7eb;
+      padding: 20px;
+    }
+
+    .sidebar h2 {
+      font-size: 18px;
+      border-bottom: 2px solid #111;
+      padding-bottom: 6px;
+      margin-bottom: 20px;
+    }
+
+    .menu {
+      list-style: none;
+      padding: 0;
+    }
+
+    .menu li {
+      margin-bottom: 10px;
+    }
+
+    .menu li a {
+      text-decoration: none;
+      color: #111;
+      display: block;
+      padding: 8px;
+      border-radius: 6px;
+      transition: background 0.2s ease;
+    }
+
+    .menu li a:hover {
+      background-color: #f9f9f9;
+    }
+
+    .menu li.active a {
+      color: #d91a1a;
+      font-weight: 600;
+    }
+
+    .submenu {
+      margin-left: 10px;
+      list-style: none;
+      padding-left: 8px;
+      color: #444;
+      font-size: 14px;
+    }
+
+    .contact {
+      margin-top: 40px;
+      border-top: 1px solid #eee;
+      padding-top: 20px;
+    }
+
+    .contact-item {
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    /* Main Content */
+    .content {
+      flex: 1;
+      padding: 40px;
+    }
+
+    .content h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .content .desc {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 20px;
+    }
+
+    .table-wrapper {
+      border-top: 2px solid #d91a1a;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      border-bottom: 1px solid #e5e7eb;
+      padding: 10px;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    th {
+      background-color: #fafafa;
+    }
+
+    button {
+      border: 1px solid #d1d5db;
+      background-color: #f9fafb;
+      padding: 4px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #f3f4f6;
+    }
+
+    .pagination {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .pagination button {
+      margin: 2px;
+      padding: 6px 10px;
+      border: 1px solid #ddd;
+      background: #fff;
+      cursor: pointer;
+    }
+
+    .pagination button.active {
+      background-color: #d91a1a;
+      color: white;
+      border: 1px solid #d91a1a;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- ASIDE -->
+  <aside class="sidebar">
+    <h2>투자정보</h2>
+    <ul class="menu">
+      <li class="active">
+        <a href="#">경영정보</a>
+        <ul class="submenu">
+          <li>바젤3 자본공시</li>
+          <li>지배구조 관련공시</li>
+          <li>커버드본드</li>
+          <li>기타공시</li>
+          <li>재무제표</li>
+        </ul>
+      </li>
+      <li><a href="#">공고</a></li>
+      <li><a href="#">신용등급</a></li>
+      <li><a href="#">BNK금융지주</a></li>
+      <li><a href="#">IR정보</a></li>
+    </ul>
+
+    <div class="contact">
+      <div class="contact-item">💬 Talk상담</div>
+      <div class="contact-item">✉ 메일상담</div>
+      <div class="contact-item">📘 FAQ</div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="content">
+    <h1>경영공시</h1>
+    <p class="desc">
+      부산은행의 경영소식 및 주주총회, 기타 현황에 대한 자료를 제공합니다.
+    </p>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>첨부파일</th>
+            <th>등록일</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>2025년 상반기 부산은행 현황</td><td><button>다운로드</button></td><td>2025-08-29</td></tr>
+          <tr><td>2</td><td>2025년 1분기 부산은행 현황</td><td><button>다운로드</button></td><td>2025-05-30</td></tr>
+          <tr><td>3</td><td>2024년 부산은행 현황</td><td><button>다운로드</button></td><td>2025-03-31</td></tr>
+          <tr><td>4</td><td>2024년 3분기 부산은행 현황</td><td><button>다운로드</button></td><td>2024-11-29</td></tr>
+          <tr><td>5</td><td>2024년 상반기 부산은행 현황</td><td><button>다운로드</button></td><td>2024-08-30</td></tr>
+          <tr><td>6</td><td>2024년 1/4분기 부산은행 현황</td><td><button>다운로드</button></td><td>2024-05-31</td></tr>
+          <tr><td>7</td><td>2023년 부산은행 현황</td><td><button>다운로드</button></td><td>2024-03-29</td></tr>
+          <tr><td>8</td><td>2023년 3분기 부산은행 현황</td><td><button>다운로드</button></td><td>2023-11-30</td></tr>
+          <tr><td>9</td><td>2023년 상반기 부산은행 현황</td><td><button>다운로드</button></td><td>2023-08-31</td></tr>
+          <tr><td>10</td><td>2023년 1/4분기 부산은행 현황</td><td><button>다운로드</button></td><td>2023-05-31</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pagination">
+      <button class="active">1</button>
+      <button>2</button>
+      <button>3</button>
+      <button>4</button>
+      <button>5</button>
+      <button>></button>
+    </div>
+  </main>
+</div>
+
+</body>
+</html>

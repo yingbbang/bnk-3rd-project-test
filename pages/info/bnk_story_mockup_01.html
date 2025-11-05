@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>BNK부산은행 | 뉴스룸</title>
+  <style>
+    body {
+      font-family: "Noto Sans KR", sans-serif;
+      background: #f9f9f9;
+      color: #333;
+      margin: 0;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: 3fr 1.2fr;
+      gap: 20px;
+      padding: 40px;
+    }
+
+    h2 {
+      border-left: 4px solid #d91a1a;
+      padding-left: 8px;
+      font-size: 1.2rem;
+    }
+
+    .press-content {
+      display: flex;
+      gap: 20px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    .main-article img {
+      width: 100%;
+      border-radius: 8px;
+    }
+
+    .side-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .side-list img {
+      width: 100%;
+      border-radius: 6px;
+    }
+
+    .notice ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      background: #fff;
+      border-radius: 10px;
+      padding: 15px;
+    }
+
+    .notice li {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid #ddd;
+      padding: 8px 0;
+      font-size: 0.9rem;
+    }
+
+    .event, .newsletter, .promo, .album {
+      margin-top: 30px;
+    }
+
+    .event-card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .event-card img {
+      width: 120px;
+      opacity: 0.8;
+    }
+
+    .album .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .photo-grid img {
+      width: 100%;
+      border-radius: 6px;
+    }
+
+    .sns iframe {
+      width: 100%;
+      height: 350px;
+      border: none;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+
+    .bsline {
+      background: #fff;
+      border-radius: 10px;
+      padding: 10px;
+    }
+
+    .bsline li {
+      padding: 5px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    iframe {
+      border: none;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <!-- 보도자료 -->
+    <section class="press">
+      <h2>보도자료</h2>
+      <div class="press-content">
+        <div class="main-article">
+          <img src="./img/main_news.jpg" alt="BNK부산은행 본점">
+          <p class="title">BNK부산은행, 서민금융 대표상품 ‘새희망홀씨’ 금리 1.0%p 인하</p>
+          <p class="desc">금융취약계층 부담 완화를 위해 연말까지 총 600억 규모 지원 실시</p>
+        </div>
+        <aside class="side-list">
+          <img src="./img/thumb1.jpg" alt="">
+          <img src="./img/thumb2.jpg" alt="">
+          <img src="./img/thumb3.jpg" alt="">
+        </aside>
+      </div>
+    </section>
+
+    <!-- SNS소셜허브 -->
+    <aside class="sns">
+      <h2>SNS소셜허브</h2>
+      <iframe src="https://www.facebook.com/BNKBusanBank" title="BNK부산은행 페이스북"></iframe>
+      <ul class="bsline">
+        <li>롯데갤러리 Experience Day</li>
+        <li>BNK특급우대 우수기업적금 출시기념 이벤트</li>
+        <li>BNK부산은행, 서민금융 대표상품 금리 인하</li>
+      </ul>
+    </aside>
+
+    <!-- 공지사항 -->
+    <section class="notice">
+      <h2>공지사항</h2>
+      <ul>
+        <li><span>BNK금융그룹 내 고객정보 제공내역...</span><time>2025-11-03</time></li>
+        <li><span>(오픈소스 소프트웨어 라이선스...</span><time>2025-10-31</time></li>
+        <li><span>(기업형병행 법인 비대면...</span><time>2025-10-31</time></li>
+      </ul>
+    </section>
+
+    <!-- 이벤트 -->
+    <section class="event">
+      <h2>이벤트</h2>
+      <div class="event-card">
+        <img src="./img/bnk_logo.png" alt="">
+        <p>BNK특급우대 우수기업적금 출시기념 이벤트</p>
+        <time>2025.11.03 ~ 2025.11.15</time>
+      </div>
+    </section>
+
+    <!-- 소식지 -->
+    <section class="newsletter">
+      <h2>소식지(행보)</h2>
+      <img src="./img/news_cover.jpg" alt="소식지 표지" style="width:100%;border-radius:8px;">
+      <time>2025.07 월호</time>
+    </section>
+
+    <!-- 홍보동영상 -->
+    <section class="promo">
+      <h2>홍보동영상</h2>
+      <iframe width="420" height="240"
+        src="https://www.youtube.com/embed/xxxxx"
+        title="부산은행 홍보영상"></iframe>
+      <p>2022년 부산은행 홍보영상</p>
+    </section>
+
+    <!-- 포토앨범 -->
+    <section class="album">
+      <h2>포토앨범</h2>
+      <div class="photo-grid">
+        <img src="./img/photo1.jpg" alt="">
+        <img src="./img/photo2.jpg" alt="">
+        <img src="./img/photo3.jpg" alt="">
+        <img src="./img/photo4.jpg" alt="">
+      </div>
+    </section>
+  </main>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      console.log("BNK 뉴스 페이지 로드 완료");
+    });
+  </script>
+</body>
+</html>

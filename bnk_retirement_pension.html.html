@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BNK 퇴직연금 – HTML 와이어프레임 (한글 버전)</title>
+  <style>
+    :root { --bnk-red:#D91A1A; --bg:#f7f7f8; --text:#2b2b2b; --muted:#6b7280; --card:#ffffff; --border:#e5e7eb; }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif}
+    .app{min-height:100vh;display:flex;flex-direction:column}
+    header{display:flex;justify-content:space-between;align-items:center;background:#fff;border-bottom:1px solid var(--border);padding:12px 16px}
+    header h1{margin:0;font-size:20px;color:var(--bnk-red);font-weight:800}
+    .top-actions button{border:1px solid var(--border);background:#fff;border-radius:8px;padding:8px 10px;margin-left:8px;color:#374151}
+    .layout{display:flex;min-height:0;flex:1}
+    aside{width:240px;background:#fff;border-right:1px solid var(--border);padding:16px}
+    nav a{display:block;color:#374151;text-decoration:none;padding:8px 6px;border-radius:8px}
+    nav a.active, nav a:hover{background:#f3f4f6;font-weight:600}
+    main{flex:1;padding:24px;display:flex;flex-direction:column;gap:24px;min-width:0}
+    .grid{display:grid;gap:16px}
+    .g-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+    .g-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    @media (max-width:1024px){.g-4{grid-template-columns:repeat(2,minmax(0,1fr))}.g-2{grid-template-columns:1fr}}
+    @media (max-width:640px){aside{display:none}.g-4{grid-template-columns:1fr}}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:16px;box-shadow:0 4px 12px rgba(0,0,0,.04)}
+    .card .inner{padding:16px}
+    .k{color:var(--muted);font-size:12px}
+    .v{font-size:18px;font-weight:700;margin-top:4px}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--border)}
+    .btn-red{background:var(--bnk-red);color:#fff;border:none;border-radius:8px;padding:10px 14px}
+    footer{border-top:1px solid var(--border);background:#fff;padding:12px 16px;text-align:center;color:#6b7280;font-size:12px}
+    .row{display:flex;gap:16px;align-items:stretch}
+    .col{flex:1;min-width:0}
+    .legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
+    .dot{width:10px;height:10px;border-radius:2px;display:inline-block}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <h1>BNK 퇴직연금</h1>
+      <div class="top-actions">
+        <button type="button">도움말</button>
+        <button type="button">알림</button>
+        <button type="button">로그아웃</button>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside>
+        <nav>
+          <a class="active" href="#">대시보드</a>
+          <a href="#pension">내 연금</a>
+          <a href="#product">운용상품 관리</a>
+          <a href="#tax">세제 혜택</a>
+          <a href="#transfer">이체/전환</a>
+          <a href="#policy">공지 및 제도 안내</a>
+        </nav>
+      </aside>
+
+      <main>
+        <!-- 요약 카드 -->
+        <section class="grid g-4">
+          <div class="card"><div class="inner"><div class="k">총 적립금</div><div class="v">₩128,000,000</div></div></div>
+          <div class="card"><div class="inner"><div class="k">평균 수익률</div><div class="v">+3.5%</div></div></div>
+          <div class="card"><div class="inner"><div class="k">월 납입액</div><div class="v">₩1,200,000</div></div></div>
+          <div class="card"><div class="inner"><div class="k">세액공제 잔여 한도</div><div class="v">₩2,400,000</div></div></div>
+        </section>
+
+        <!-- 차트 섹션 -->
+        <section class="row">
+          <!-- 수익률 추이 -->
+          <div class="card col">
+            <div class="inner">
+              <h2 style="margin:0 0 8px 0;font-size:16px">수익률 추이</h2>
+              <div style="width:100%;height:240px">
+                <svg viewBox="0 0 600 240" width="100%" height="100%" aria-label="수익률 추이">
+                  <line x1="40" y1="200" x2="580" y2="200" stroke="#e5e7eb" />
+                  <line x1="40" y1="20" x2="40" y2="200" stroke="#e5e7eb" />
+                  <g stroke="#f0f1f3">
+                    <line x1="40" y1="160" x2="580" y2="160" />
+                    <line x1="40" y1="120" x2="580" y2="120" />
+                    <line x1="40" y1="80"  x2="580" y2="80" />
+                    <line x1="40" y1="40"  x2="580" y2="40" />
+                  </g>
+                  <g fill="#6b7280" font-size="12">
+                    <text x="80"  y="220">1월</text>
+                    <text x="160" y="220">2월</text>
+                    <text x="240" y="220">3월</text>
+                    <text x="320" y="220">4월</text>
+                    <text x="400" y="220">5월</text>
+                    <text x="480" y="220">6월</text>
+                  </g>
+                  <polyline fill="none" stroke="var(--bnk-red)" stroke-width="3"
+                    points="80,170 160,150 240,135 320,125 400,120 480,105" />
+                  <g fill="var(--bnk-red)">
+                    <circle cx="80"  cy="170" r="3"/>
+                    <circle cx="160" cy="150" r="3"/>
+                    <circle cx="240" cy="135" r="3"/>
+                    <circle cx="320" cy="125" r="3"/>
+                    <circle cx="400" cy="120" r="3"/>
+                    <circle cx="480" cy="105" r="3"/>
+                  </g>
+                </svg>
+              </div>
+              <div class="legend"><span class="dot" style="background:var(--bnk-red)"></span><span class="k">월별 수익률(지수)</span></div>
+            </div>
+          </div>
+
+          <!-- 상품 구성 비율 -->
+          <div class="card col">
+            <div class="inner">
+              <h2 style="margin:0 0 8px 0;font-size:16px">운용상품 구성</h2>
+              <div style="display:flex;gap:16px;align-items:center;justify-content:center">
+                <svg viewBox="0 0 220 220" width="220" height="220" aria-label="상품 구성 비율">
+                  <circle cx="110" cy="110" r="80" fill="none" stroke="#e5e7eb" stroke-width="30" />
+                  <circle cx="110" cy="110" r="80" fill="none" stroke="var(--bnk-red)" stroke-width="30"
+                          stroke-dasharray="301.59 201.06" stroke-dashoffset="0" transform="rotate(-90 110 110)"/>
+                  <circle cx="110" cy="110" r="80" fill="none" stroke="#9ca3af" stroke-width="30"
+                          stroke-dasharray="125.66 376.99" stroke-dashoffset="-301.59" transform="rotate(-90 110 110)"/>
+                  <circle cx="110" cy="110" r="80" fill="none" stroke="#d1d5db" stroke-width="30"
+                          stroke-dasharray="75.40 427.25" stroke-dashoffset="-427.25" transform="rotate(-90 110 110)"/>
+                </svg>
+                <div class="k">
+                  <div><span class="dot" style="background:var(--bnk-red)"></span> 예금형 60%</div>
+                  <div><span class="dot" style="background:#9ca3af"></span> 펀드형 25%</div>
+                  <div><span class="dot" style="background:#d1d5db"></span> ETF형 15%</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 납입 내역 -->
+        <section class="card">
+          <div class="inner">
+            <h2 style="margin:0 0 8px 0;font-size:16px">최근 납입 내역</h2>
+            <div style="overflow:auto">
+              <table>
+                <thead>
+                  <tr style="color:var(--muted)"><th>납입일</th><th>금액</th><th>유형</th><th>운용상품</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>2025-10-25</td><td>₩400,000</td><td>자동 납입</td><td>예금형</td></tr>
+                  <tr><td>2025-09-25</td><td>₩400,000</td><td>자동 납입</td><td>펀드 (글로벌 채권)</td></tr>
+                  <tr><td>2025-08-25</td><td>₩400,000</td><td>자동 납입</td><td>ETF (K200)</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 세제 혜택 -->
+        <section id="tax" class="card">
+          <div class="inner">
+            <h2 style="margin:0 0 8px 0;font-size:16px">세제 혜택 현황</h2>
+            <div style="height:12px;background:#e5e7eb;border-radius:999px">
+              <div style="height:12px;background:var(--bnk-red);width:75%;border-radius:999px"></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-top:8px" class="k">
+              <span>사용금액: ₩6,800,000</span>
+              <span>공제한도: ₩9,000,000</span>
+            </div>
+            <div style="margin-top:12px"><button class="btn-red" type="button">세액공제 계산기 열기</button></div>
+          </div>
+        </section>
+
+        <!-- 보안 안내 -->
+        <section class="card">
+          <div class="inner k">
+            🔒 고객님의 데이터는 AES256 암호화 및 OTP 인증을 통해 안전하게 보호됩니다. (ISMS 기준 준수)
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <footer>
+      © 2025 BNK은행. All rights reserved. | 금융규정 및 개인정보보호정책
+    </footer>
+  </div>
+</body>
+</html>
