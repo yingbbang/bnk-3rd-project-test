@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BNK 부산은행스토리</title>
+  <style>
+    body {
+      font-family: "Noto Sans KR", sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f7f7f7;
+    }
+    header {
+      background-color: #fff;
+      border-bottom: 2px solid #d91a1a;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 {
+      color: #d91a1a;
+      font-size: 20px;
+    }
+    nav a {
+      text-decoration: none;
+      color: #333;
+      margin-right: 10px;
+      font-size: 14px;
+    }
+
+    .container {
+      width: 1000px;
+      margin: 30px auto;
+      background: #fff;
+      padding: 30px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      border-left: 5px solid #d91a1a;
+      padding-left: 10px;
+      color: #333;
+    }
+
+    /* 보도자료 */
+    .news {
+      margin-top: 20px;
+    }
+    .news img {
+      width: 100%;
+      border: 1px solid #ccc;
+    }
+    .news .desc {
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    /* 공지사항 */
+    .notice {
+      margin-top: 40px;
+      background-color: #f2f2f2;
+      padding: 20px;
+      border-radius: 5px;
+    }
+    .notice ul {
+      list-style: none;
+      padding: 0;
+    }
+    .notice li {
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    /* 이벤트, 소식지, 홍보영상, 포토 */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .event, .newsletter, .video, .photo {
+      background: #fff;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+
+    .event img {
+      width: 100%;
+      border: 1px solid #ddd;
+    }
+
+    .video iframe {
+      width: 100%;
+      height: 250px;
+      border: none;
+    }
+
+    .photo img {
+      width: 90px;
+      height: 90px;
+      object-fit: cover;
+      margin: 3px;
+      border-radius: 3px;
+      border: 1px solid #ccc;
+    }
+
+    footer {
+      background-color: #222;
+      color: #aaa;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>BNK 부산은행스토리</h1>
+  <nav>
+    <a href="#">은행소개</a> &gt; <a href="#" style="color:#d91a1a;">BNK 부산은행스토리</a>
+  </nav>
+</header>
+
+<div class="container">
+  <section class="news">
+    <h2>보도자료</h2>
+    <img src="bd80ad61-99e9-40fd-adb1-dcb61bfe9d8d.png" alt="보도자료 이미지">
+    <p class="desc">
+      <strong>BNK부산은행</strong>, ‘동백일터클리닝’ 운영 지원으로 근로환경 개선 앞장 – 11/5(수), 부산 미음산단서 지원식 열려
+    </p>
+  </section>
+
+  <section class="notice">
+    <h2>공지사항</h2>
+    <ul>
+      <li>공동대출 약관 및 약정서(추가약정서) 개정 안내</li>
+      <li>본인확인서비스, 비대면 실명확인 등록 안내</li>
+      <li>비대면 채무조정 프로세스 구축 제공 안내</li>
+    </ul>
+  </section>
+
+  <div class="grid">
+    <div class="event">
+      <h2>이벤트</h2>
+      <img src="a5d8d3ae-b317-4e67-8c2a-6be4026a7508.png" alt="이벤트 이미지">
+      <p>스타벅스 커피받고 예금 가입 어땀? (2025.11.05 ~ 2025.11.28)</p>
+    </div>
+
+    <div class="newsletter">
+      <h2>소식지(행보)</h2>
+      <p><strong>2025.07 월호</strong></p>
+      <img src="https://via.placeholder.com/200x250?text=행보+월호" alt="행보 표지">
+    </div>
+
+    <div class="video">
+      <h2>홍보동영상</h2>
+      <iframe src="https://www.youtube.com/embed/ZvLsmHULU9E" title="BNK 홍보영상"></iframe>
+      <p>2022년 부산은행 홍보영상</p>
+    </div>
+
+    <div class="photo">
+      <h2>포토앨범</h2>
+      <div>
+        <img src="https://via.placeholder.com/90" alt="">
+        <img src="https://via.placeholder.com/90" alt="">
+        <img src="https://via.placeholder.com/90" alt="">
+        <img src="https://via.placeholder.com/90" alt="">
+        <img src="https://via.placeholder.com/90" alt="">
+        <img src="https://via.placeholder.com/90" alt="">
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  © 2025 BNK BUSAN BANK. All Rights Reserved.
+</footer>
+
+</body>
+</html>

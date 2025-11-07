@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BNK 퇴직연금 시뮬레이터</title>
+  <style>
+    :root{
+      --bnk-red:#D81921;
+      --bnk-darkred:#8B0305;
+      --bnk-gray:#919294;
+      --bnk-darkgray:#655B4F;
+      --bnk-lightgray:#B8A898;
+      --bnk-sand:#A86D4B;
+      --radius:10px;
+      --border:#ddd;
+      --text:#222;
+      --bg:#fafafa;
+    }
+    body{margin:0;font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);}    
+    header{background:var(--bnk-red);color:white;padding:20px 24px;}
+    header h1{margin:0;font-size:24px;}
+    .wrap{max-width:1000px;margin:40px auto;padding:0 20px;}
+    .filter-group{margin-bottom:20px;}
+    .filter-group h3{margin:0 0 8px;font-size:15px;}
+    .chips{display:flex;gap:8px;flex-wrap:wrap;}
+    .chip{padding:6px 14px;border-radius:999px;border:1px solid var(--border);cursor:pointer;font-size:14px;background:white;color:var(--text);}
+    .chip.active{background:var(--bnk-red);color:white;border-color:var(--bnk-red);}
+    .card{background:white;border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:20px;box-shadow:0 2px 5px rgba(0,0,0,0.05);}    
+    label{display:block;font-weight:600;margin-top:10px;}
+    input{width:100%;padding:10px;border:1px solid #ccc;border-radius:8px;margin-top:4px;}
+    button{background:var(--bnk-darkred);color:white;border:0;border-radius:8px;padding:10px 20px;margin-top:15px;cursor:pointer;font-weight:700;}
+    button:hover{background:var(--bnk-red);}    
+    .results{display:flex;gap:20px;flex-wrap:wrap;margin-top:20px;}
+    .stat{flex:1 1 200px;background:var(--bnk-gray);color:white;border-radius:var(--radius);padding:16px;}
+    .stat h3{margin-top:0;font-size:16px;}
+    .chart{width:100%;height:220px;background:#f3f3f3;border:1px solid #ddd;border-radius:var(--radius);margin-top:20px;}
+    footer{text-align:center;color:#555;font-size:12px;margin:30px 0;}
+    .bnk-logo{display:flex;align-items:center;gap:8px;}
+    .bnk-logo img{height:28px;}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="bnk-logo">
+      <img src="https://www.bnkfg.com/images/common/logo.png" alt="BNK 로고" />
+      <h1>BNK 퇴직연금 시뮬레이터</h1>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <section class="card">
+      <div class="filter-group">
+        <h3>가입유형</h3>
+        <div class="chips" id="typeChips">
+          <div class="chip active" data-value="DB">DB형 (확정급여형)</div>
+          <div class="chip" data-value="DC">DC형 (확정기여형)</div>
+          <div class="chip" data-value="IRP">IRP (개인형퇴직연금)</div>
+        </div>
+      </div>
+
+      <label for="years">기간(년)</label>
+      <input id="years" type="number" value="20" />
+      <label for="rate">연 수익률(%)</label>
+      <input id="rate" type="number" value="4" />
+      <label for="amount">월 납입액(원)</label>
+      <input id="amount" type="number" value="500000" />
+      <button id="calc">계산하기</button>
+    </section>
+
+    <section class="card">
+      <h2>결과</h2>
+      <div class="results">
+        <div class="stat">
+          <h3>예상 총적립금</h3>
+          <div id="total">-</div>
+        </div>
+        <div class="stat" style="background:var(--bnk-darkgray);">
+          <h3>세후 수령액</h3>
+          <div id="afterTax">-</div>
+        </div>
+      </div>
+      <div class="chart" id="chart"></div>
+    </section>
+
+    <footer>
+      © 2025 BNK금융그룹 | 본 시뮬레이터는 참고용으로 실제 운용 결과와 다를 수 있습니다.
+    </footer>
+  </div>
+
+  <script>
+    const fmt = n => n.toLocaleString('ko-KR') + '원';
+    let type = 'DB';
+
+    // Chip UI toggle
+    document.querySelectorAll('.chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        type = chip.dataset.value;
+      });
+    });
+
+    document.getElementById('calc').addEventListener('click',()=>{
+      const years = parseFloat(document.getElementById('years').value);
+      const rate = parseFloat(document.getElementById('rate').value)/100;
+      const monthly = parseFloat(document.getElementById('amount').value);
+
+      let total=0;
+      if(type==='IRP' || type==='DC'){
+        const months = years*12;
+        const i = rate/12;
+        total = i===0 ? monthly*months : monthly*((Math.pow(1+i,months)-1)/i);
+      }else if(type==='DB'){
+        total = monthly*30*years; // 단순화
+      }
+      const afterTax = total*0.9667;
+      document.getElementById('total').textContent = fmt(Math.round(total));
+      document.getElementById('afterTax').textContent = fmt(Math.round(afterTax));
+    });
+  </script>
+</body>
+</html>

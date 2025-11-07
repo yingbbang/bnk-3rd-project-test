@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>퇴직연금 시뮬레이터</title>
+  <style>
+    :root{
+      --bg:#0b0d10; --panel:#14181d; --panel-2:#0f1317; --text:#e7edf3; --muted:#a7b1ba; --accent:#59aaff; --ok:#56d364; --warn:#ffcc00;
+      --br:14px;
+    }
+    html,body{height:100%;}
+    body{margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Noto Sans KR, "Apple SD Gothic Neo", "Malgun Gothic", Arial, sans-serif; background:var(--bg); color:var(--text);}    
+    .wrap{max-width:1100px; margin:24px auto; padding:0 16px;}
+    header{display:flex; gap:12px; align-items:center; justify-content:space-between; margin-bottom:16px;}
+    h1{font-size:22px; margin:0; letter-spacing:0.2px;}
+    .card{background:linear-gradient(180deg,var(--panel),var(--panel-2)); border:1px solid #1e242b; border-radius:var(--br); padding:16px;}
+    .grid{display:grid; gap:12px;}
+    .grid.cols-2{grid-template-columns: 1fr 1fr;}
+    .grid.cols-3{grid-template-columns: repeat(3,1fr);}    
+    .row{display:grid; gap:10px; grid-template-columns: 220px 1fr; align-items:center;}
+    label{font-size:13px; color:var(--muted);}    
+    input, select{width:100%; background:#0d1116; color:var(--text); border:1px solid #22303b; border-radius:10px; padding:10px 12px; font-size:14px;}
+    input:focus, select:focus{outline:2px solid var(--accent); border-color:transparent;}
+    .tips{font-size:12px; color:var(--muted);}    
+    .actions{display:flex; gap:8px; flex-wrap:wrap;}
+    button{background:var(--accent); color:#05121f; border:0; padding:10px 14px; border-radius:10px; font-weight:700; cursor:pointer;}
+    button.secondary{background:#202a33; color:var(--text); border:1px solid #26323d;}
+    .results{display:grid; gap:12px;}
+    .stat{background:#0e1216; border:1px solid #1e2730; border-radius:12px; padding:14px;}
+    .stat h3{margin:0 0 6px; font-size:13px; color:var(--muted);}    
+    .stat .value{font-size:20px; font-weight:800;}
+    .muted{color:var(--muted);}    
+    .switcher{display:flex; gap:8px;}
+    .pill{padding:8px 10px; border-radius:999px; background:#10161c; border:1px solid #23303a; color:var(--text); cursor:pointer; font-size:13px;}
+    .pill[aria-pressed="true"]{background:var(--accent); color:#02121f; border-color:transparent;}
+    .section-title{font-size:14px; color:var(--muted); margin:4px 0 6px;}
+    .tbl{border-collapse:collapse; width:100%; font-size:13px;}
+    .tbl th,.tbl td{border-bottom:1px solid #22313d; padding:8px 10px; text-align:right;}
+    .tbl th:first-child,.tbl td:first-child{text-align:left;}
+    .chart{width:100%; height:220px; background:#0e1419; border:1px solid #1e2a35; border-radius:12px;}
+    footer{margin:18px 0 40px; text-align:center; color:var(--muted); font-size:12px;}
+    @media (max-width:860px){
+      .row{grid-template-columns:1fr;}
+      .grid.cols-2,.grid.cols-3{grid-template-columns:1fr;}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>퇴직연금 시뮬레이터</h1>
+      <div class="switcher" role="group" aria-label="유형 선택">
+        <button class="pill" data-type="DB" aria-pressed="true">DB형</button>
+        <button class="pill" data-type="DC" aria-pressed="false">DC형</button>
+        <button class="pill" data-type="IRP" aria-pressed="false">IRP</button>
+      </div>
+    </header>
+
+    <!-- 입력 카드 -->
+    <section class="card" aria-labelledby="inputTitle">
+      <div class="section-title" id="inputTitle">입력</div>
+      <div id="forms" class="grid cols-2" >
+        <!-- 공통: 기간, 수익률, 세율 -->
+        <div class="row">
+          <label for="years">기간 (년)</label>
+          <input id="years" type="number" inputmode="decimal" min="0" step="0.1" value="20" aria-describedby="yearsTip" />
+        </div>
+        <div class="row" data-show="DC,IRP">
+          <label for="rate">연 수익률 (%)</label>
+          <input id="rate" type="number" inputmode="decimal" step="0.1" value="4" />
+        </div>
+        <div class="row" data-show="IRP">
+          <label for="tax">세율 (연금수령 가정, %)</label>
+          <input id="tax" type="number" inputmode="decimal" step="0.1" value="3.3" />
+        </div>
+
+        <!-- DB 전용 -->
+        <div class="row" data-show="DB">
+          <label for="avgMonthly">평균임금(월, 원)</label>
+          <input id="avgMonthly" type="number" inputmode="numeric" value="3000000" />
+        </div>
+        <div class="row" data-show="DB">
+          <label for="daysPerMonth">월 환산 일수</label>
+          <input id="daysPerMonth" type="number" inputmode="decimal" step="0.1" value="30" />
+        </div>
+
+        <!-- DC 전용 -->
+        <div class="row" data-show="DC">
+          <label for="annualContrib">연 납입액(원)</label>
+          <input id="annualContrib" type="number" inputmode="numeric" value="2400000" />
+        </div>
+
+        <!-- IRP 전용 -->
+        <div class="row" data-show="IRP">
+          <label for="monthlyContrib">월 납입액(원)</label>
+          <input id="monthlyContrib" type="number" inputmode="numeric" value="500000" />
+        </div>
+      </div>
+      <p id="yearsTip" class="tips">팁: 기간은 소수(예: 10.5년)로 입력 가능.</p>
+      <div class="actions" style="margin-top:8px">
+        <button id="btnCalc">계산하기</button>
+        <button id="btnReset" class="secondary" aria-label="입력 초기화">초기화</button>
+      </div>
+    </section>
+
+    <!-- 결과 카드 -->
+    <section class="card" style="margin-top:12px" aria-labelledby="resultTitle">
+      <div class="section-title" id="resultTitle">결과</div>
+      <div class="results grid cols-3" aria-live="polite">
+        <div class="stat">
+          <h3>예상 총적립금 (세전)</h3>
+          <div id="gross" class="value">-</div>
+          <div class="muted" id="subGross"> </div>
+        </div>
+        <div class="stat">
+          <h3>세후 수령 추정</h3>
+          <div id="net" class="value">-</div>
+          <div class="muted" id="subNet"> </div>
+        </div>
+        <div class="stat">
+          <h3>가정 요약</h3>
+          <div id="assump" class="muted">-</div>
+        </div>
+      </div>
+      <div style="margin-top:12px" class="grid cols-2">
+        <svg id="chart" class="chart" role="img" aria-label="연도별 적립 추이 그래프"></svg>
+        <div class="card" style="background:#0c1116">
+          <div class="section-title">연도별 잔액</div>
+          <div style="max-height:200px; overflow:auto; border:1px solid #1b2630; border-radius:10px">
+            <table class="tbl" aria-label="연도별 잔액 표">
+              <thead>
+                <tr><th>연차</th><th>잔액(원)</th></tr>
+              </thead>
+              <tbody id="tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>※ 본 도구는 단순 시뮬레이션입니다. 실제 세법/사업자 규정과 다를 수 있습니다.</footer>
+  </div>
+
+  <script>
+    // ---- 유틸 ----
+    const fmtKRW = (n)=> n===0?"0원":(n||0).toLocaleString('ko-KR', {maximumFractionDigits:0})+"원";
+    const clamp = (v, min, max)=> Math.min(Math.max(v, min), max);
+    const byId = (id)=> document.getElementById(id);
+
+    // 상태
+    let plan = 'DB';
+
+    // 유형 토글
+    document.querySelectorAll('.pill').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        plan = btn.dataset.type;
+        document.querySelectorAll('.pill').forEach(b=> b.setAttribute('aria-pressed', String(b===btn)));
+        // 표시 항목 갱신
+        document.querySelectorAll('[data-show]').forEach(el=>{
+          const showFor = (el.getAttribute('data-show')||'').split(',');
+          el.style.display = showFor.includes(plan)?'grid':'none';
+        });
+        clearResults();
+      });
+    });
+
+    function clearResults(){
+      byId('gross').textContent='-';
+      byId('net').textContent='-';
+      byId('subGross').textContent='';
+      byId('subNet').textContent='';
+      byId('assump').textContent='-';
+      byId('tbody').innerHTML='';
+      drawChart([]);
+    }
+
+    // 기본 표시 상태 초기화
+    document.querySelector('[data-type="DB"]').click();
+
+    // 계산 버튼
+    byId('btnCalc').addEventListener('click', ()=>{
+      const years = parseFloat(byId('years').value)||0;
+      const rate = parseFloat(byId('rate').value||'0')/100; // 연
+      const tax = parseFloat(byId('tax').value||'0')/100;   // IRP 세후
+      const daysPerMonth = parseFloat(byId('daysPerMonth').value||'30');
+      const avgMonthly = parseFloat(byId('avgMonthly').value||'0');
+      const annualContrib = parseFloat(byId('annualContrib').value||'0');
+      const monthlyContrib = parseFloat(byId('monthlyContrib').value||'0');
+
+      let gross=0, net=0, series=[]; // 연말 잔액 시퀀스
+      let note='';
+
+      if(plan==='DB'){
+        // 퇴직급여 = (1일 평균임금 × 30일) × 근속연수, 평균임금(일) = 평균월임금/월일수
+        const avgDaily = avgMonthly / clamp(daysPerMonth, 1, 31);
+        gross = (avgDaily * 30) * years; // 단순 선형 가정
+        net = gross; // 세후 개별 산정은 케이스 바이 케이스라 동일로 둠
+        // 시리즈(선형 누적)
+        for(let y=1;y<=Math.max(1,Math.floor(years));y++){
+          series.push({x:y, y:(avgDaily*30)*y});
+        }
+        note = `DB: 평균월 ${fmtKRW(avgMonthly)} / 월일수 ${daysPerMonth} / 근속 ${years}년`;
+      }
+      else if(plan==='DC'){
+        // 연금리 r, 연납입 A, n년: FV = A * ((1+r)^n - 1)/r
+        const r = rate; const n = years; const A = annualContrib;
+        if(r===0){ gross = A * n; }
+        else { gross = A * ( Math.pow(1+r, n) - 1 ) / r; }
+        net = gross; // 세후 별도 미적용(사업자플랜 가정)
+        // 연도별
+        for(let y=1;y<=Math.max(1,Math.floor(n));y++){
+          const fv = r===0 ? A*y : A * (Math.pow(1+r, y) - 1)/r;
+          series.push({x:y, y:fv});
+        }
+        note = `DC: 연납입 ${fmtKRW(A)} / 연수익률 ${(rate*100).toFixed(2)}% / 기간 ${n}년`;
+      }
+      else if(plan==='IRP'){
+        // 월복리 가정: 월이율 i = r/12, 월납입 P, 기간 n년(=12n개월)
+        const r = rate; const i = r/12; const m = Math.round(years*12); const P = monthlyContrib;
+        let fv;
+        if(i===0){ fv = P * m; }
+        else { fv = P * ( Math.pow(1+i, m) - 1 ) / i; }
+        gross = fv;
+        net = fv * (1 - clamp(tax, 0, 1));
+        for(let k=1;k<=Math.max(1,Math.floor(years));k++){
+          const mk = k*12;
+          const fvy = i===0 ? P*mk : P * (Math.pow(1+i, mk) - 1)/i;
+          series.push({x:k, y:fvy});
+        }
+        note = `IRP: 월납입 ${fmtKRW(P)} / 연수익률 ${(rate*100).toFixed(2)}% / 기간 ${years}년 / 세율 ${(tax*100).toFixed(2)}%`;
+      }
+
+      // 결과 표시
+      byId('gross').textContent = fmtKRW(Math.round(gross));
+      byId('net').textContent   = fmtKRW(Math.round(net));
+      byId('subGross').textContent = plan==='DB' ? '공식: (일평균×30)×근속연수' : (plan==='DC' ? '공식: A×((1+r)^n−1)/r' : '공식: P×((1+i)^m−1)/i');
+      byId('subNet').textContent = plan==='IRP' ? '세후 = 세전×(1−세율)' : '세후 단순 동일 가정';
+      byId('assump').textContent = note;
+
+      // 표
+      const tbody = byId('tbody');
+      tbody.innerHTML = series.map(s=>`<tr><td>${s.x}년</td><td>${fmtKRW(Math.round(s.y))}</td></tr>`).join('');
+
+      // 차트
+      drawChart(series);
+    });
+
+    // 리셋
+    byId('btnReset').addEventListener('click', ()=>{
+      document.querySelector('[data-type="DB"]').click();
+      ['years','rate','tax','daysPerMonth','avgMonthly','annualContrib','monthlyContrib'].forEach(id=>{
+        const el = byId(id); if(!el) return;
+        const def = {years:20, rate:4, tax:3.3, daysPerMonth:30, avgMonthly:3000000, annualContrib:2400000, monthlyContrib:500000}[id];
+        el.value = def;
+      });
+      clearResults();
+    });
+
+    // 간단 SVG 라인차트 렌더러
+    function drawChart(series){
+      const svg = byId('chart');
+      const W = svg.clientWidth || 520; const H = svg.clientHeight || 220;
+      svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+      svg.innerHTML = '';
+      // 축/패딩
+      const padL=40, padR=10, padT=10, padB=24;
+      // 축
+      const axis = document.createElementNS('http://www.w3.org/2000/svg','path');
+      axis.setAttribute('d', `M ${padL} ${H-padB} H ${W-padR} M ${padL} ${H-padB} V ${padT}`);
+      axis.setAttribute('stroke','#2a3947'); axis.setAttribute('fill','none'); axis.setAttribute('stroke-width','1');
+      svg.appendChild(axis);
+      if(!series || series.length===0){ return; }
+      const xs = series.map(s=>s.x), ys = series.map(s=>s.y);
+      const minX = Math.min(...xs), maxX = Math.max(...xs);
+      const minY = 0, maxY = Math.max(...ys)*1.05;
+      const x2px = x=> padL + ( (x-minX) / Math.max(1,(maxX-minX)) ) * (W - padL - padR);
+      const y2px = y=> (H - padB) - ( (y-minY) / Math.max(1,(maxY-minY)) ) * (H - padT - padB);
+      // 그리드 라인 4개
+      for(let i=1;i<=4;i++){
+        const gy = padT + (H-padT-padB)*(i/4);
+        const gl = document.createElementNS('http://www.w3.org/2000/svg','line');
+        gl.setAttribute('x1', padL); gl.setAttribute('x2', W-padR);
+        gl.setAttribute('y1', gy); gl.setAttribute('y2', gy);
+        gl.setAttribute('stroke', '#18222c'); gl.setAttribute('stroke-width','1');
+        svg.appendChild(gl);
+      }
+      // 라인
+      let d='';
+      series.forEach((s,idx)=>{
+        const X = x2px(s.x); const Y = y2px(s.y);
+        d += (idx===0?`M ${X} ${Y}`:` L ${X} ${Y}`);
+      });
+      const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+      path.setAttribute('d', d);
+      path.setAttribute('stroke', '#59aaff');
+      path.setAttribute('fill', 'none');
+      path.setAttribute('stroke-width', '2');
+      svg.appendChild(path);
+      // 점
+      series.forEach(s=>{
+        const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
+        c.setAttribute('cx', x2px(s.x)); c.setAttribute('cy', y2px(s.y)); c.setAttribute('r','3');
+        c.setAttribute('fill', '#59aaff');
+        svg.appendChild(c);
+      });
+      // 축 라벨
+      const yLabel = document.createElementNS('http://www.w3.org/2000/svg','text');
+      yLabel.setAttribute('x', padL+2); yLabel.setAttribute('y', padT+12); yLabel.setAttribute('fill','#7f8b97'); yLabel.setAttribute('font-size','10');
+      yLabel.textContent = '잔액(원)'; svg.appendChild(yLabel);
+      const xLabel = document.createElementNS('http://www.w3.org/2000/svg','text');
+      xLabel.setAttribute('x', W-padR-30); xLabel.setAttribute('y', H-6); xLabel.setAttribute('fill','#7f8b97'); xLabel.setAttribute('font-size','10');
+      xLabel.textContent = '연차'; svg.appendChild(xLabel);
+    }
+  </script>
+</body>
+</html>
