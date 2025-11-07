@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BNK 퇴직연금 랜딩페이지</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="description" content="퇴직 후에도 든든한 노후자산, BNK 퇴직연금 – IRP/DC/DB 비교, 혜택, 간편 시뮬레이터" />
+  <style>
+    :root {
+      --bnk-red: #e60012;
+      --bnk-gray: #f5f5f5;
+      --ink: #111827;
+    }
+
+    .btn-primary {
+      background: var(--bnk-red);
+      color: #fff;
+      padding: 0.9rem 2rem;
+      font-weight: 700;
+      border-radius: 9999px;
+      box-shadow: 0 4px 10px rgba(230, 0, 18, 0.25);
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-primary:hover {
+      background: #c5000f;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 14px rgba(230, 0, 18, 0.35);
+    }
+
+    .btn-primary:focus {
+      outline: 3px solid #000;
+      outline-offset: 3px;
+    }
+
+    .btn-secondary {
+      border: 2px solid var(--bnk-red);
+      color: var(--bnk-red);
+      padding: 0.9rem 2rem;
+      font-weight: 700;
+      border-radius: 9999px;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-secondary:hover {
+      background: var(--bnk-red);
+      color: white;
+      transform: translateY(-1px);
+    }
+  </style>
+</head>
+<body class="antialiased text-gray-900 bg-white">
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <span class="h-8 w-8 rounded bg-[var(--bnk-red)] inline-flex items-center justify-center text-white font-bold">BNK</span>
+        <span class="font-semibold">퇴직연금</span>
+      </div>
+      <nav class="hidden md:flex items-center gap-6 text-sm">
+        <a href="#compare" class="hover:text-[var(--bnk-red)]">상품비교</a>
+        <a href="#benefits" class="hover:text-[var(--bnk-red)]">혜택</a>
+        <a href="#simulator" class="hover:text-[var(--bnk-red)]">시뮬레이터</a>
+        <a href="#reviews" class="hover:text-[var(--bnk-red)]">후기</a>
+      </nav>
+      <a href="#consult" class="btn-primary">지금 상담 신청하기</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="relative">
+      <div class="absolute inset-0 -z-10">
+        <img src="hero-bnk-retirement.jpg" alt="BNK 퇴직연금 3D 비주얼" class="w-full h-full object-cover object-center opacity-90" />
+        <div class="absolute inset-0 bg-gradient-to-r from-white via-white/95 to-white/50"></div>
+      </div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-20 lg:py-28 grid lg:grid-cols-2 gap-10 items-center">
+        <div>
+          <h1 class="text-4xl lg:text-5xl font-extrabold leading-tight text-[var(--ink)]">
+            퇴직 후에도 든든한 노후자산,<br /> BNK 퇴직연금
+          </h1>
+          <p class="mt-5 text-lg text-gray-700">IRP / DC / DB형, 당신의 생애 설계에 맞는 맞춤형 연금 솔루션</p>
+          <div class="mt-8 flex flex-wrap gap-4">
+            <a href="#consult" class="btn-primary">지금 상담 신청하기</a>
+            <a href="#compare" class="btn-secondary">상품 한눈에 보기</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-[var(--bnk-gray)] py-16 text-center">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="text-2xl sm:text-3xl font-bold">BNK 퇴직연금 주요 혜택</h2>
+        <div class="mt-10 grid sm:grid-cols-3 gap-6">
+          <div class="p-6 bg-white rounded-2xl shadow-sm">
+            <h3 class="text-lg font-semibold text-[var(--bnk-red)]">세액공제 최대 700만원</h3>
+            <p class="mt-2 text-gray-600">연간 납입액 기준으로 세액공제 혜택을 누리세요.</p>
+          </div>
+          <div class="p-6 bg-white rounded-2xl shadow-sm">
+            <h3 class="text-lg font-semibold text-[var(--bnk-red)]">BNK 고객 수수료 우대</h3>
+            <p class="mt-2 text-gray-600">BNK 고객 전용으로 더 낮은 수수료가 적용됩니다.</p>
+          </div>
+          <div class="p-6 bg-white rounded-2xl shadow-sm">
+            <h3 class="text-lg font-semibold text-[var(--bnk-red)]">AI 포트폴리오 추천</h3>
+            <p class="mt-2 text-gray-600">AI가 당신의 투자 성향에 맞는 상품을 추천합니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="consult" class="py-16 bg-white text-center">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="text-2xl sm:text-3xl font-bold mb-4">BNK 전문가와 1:1 상담하기</h2>
+        <p class="text-gray-600 mb-6">지금 바로 상담을 신청하고 맞춤형 연금 플랜을 받아보세요.</p>
+        <form class="grid sm:grid-cols-3 gap-4 max-w-2xl mx-auto">
+          <input type="text" placeholder="이름" class="border border-gray-300 rounded-full px-4 py-3 focus:ring-2 focus:ring-[var(--bnk-red)]" required />
+          <input type="tel" placeholder="연락처" class="border border-gray-300 rounded-full px-4 py-3 focus:ring-2 focus:ring-[var(--bnk-red)]" required />
+          <button type="submit" class="btn-primary w-full">상담 요청</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-gray-50 border-t border-gray-100 py-10 text-center text-sm text-gray-600">
+    ⓒ BNK Busan Bank. All rights reserved.
+  </footer>
+</body>
+</html>

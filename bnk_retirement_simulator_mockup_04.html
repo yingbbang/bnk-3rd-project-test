@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BNK 퇴직연금 랜딩페이지</title>
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="description" content="퇴직 후에도 든든한 노후자산, BNK 퇴직연금 – IRP/DC/DB 비교, 혜택, 간편 시뮬레이터" />
+  <style>
+    /* Brand tokens */
+    :root{
+      --bnk-red:#e60012; /* BNK Red */
+      --bnk-gray:#f5f5f5;
+      --ink:#111827;
+    }
+    .btn-primary{ @apply inline-flex items-center justify-center px-5 py-3 rounded-xl font-semibold; background:var(--bnk-red); color:white; }
+    .btn-primary:focus{ outline:2px solid #000; outline-offset:2px; }
+    .card{ @apply bg-white rounded-2xl shadow-sm ring-1 ring-black/5; }
+    .kpi{ @apply text-sm text-gray-600; }
+    .sr-only-focusable:focus{ position:static !important; width:auto; height:auto; clip:auto; }
+  </style>
+</head>
+<body class="antialiased text-gray-900 bg-white">
+  <a href="#main" class="sr-only sr-only-focusable absolute left-2 top-2 z-50 bg-black text-white px-3 py-2 rounded">본문으로 건너뛰기</a>
+
+  <!-- Header -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <span class="h-8 w-8 rounded bg-[var(--bnk-red)] inline-flex items-center justify-center text-white font-bold" aria-hidden>BNK</span>
+        <span class="font-semibold">퇴직연금</span>
+      </div>
+      <nav class="hidden md:flex items-center gap-6 text-sm" aria-label="주요 메뉴">
+        <a href="#compare" class="hover:text-[var(--bnk-red)]">상품비교</a>
+        <a href="#benefits" class="hover:text-[var(--bnk-red)]">혜택</a>
+        <a href="#simulator" class="hover:text-[var(--bnk-red)]">시뮬레이터</a>
+        <a href="#reviews" class="hover:text-[var(--bnk-red)]">후기</a>
+      </nav>
+      <a href="#consult" class="btn-primary">지금 상담 신청하기</a>
+    </div>
+  </header>
+
+  <main id="main" class="min-h-screen">
+    <!-- Hero -->
+    <section class="relative">
+      <div class="absolute inset-0 -z-10">
+        <!-- Replace src with the realistic 3D hero image you have -->
+        <img src="hero-bnk-retirement.jpg" alt="부기가 서류를 들고 안내하는 BNK 퇴직연금 3D 비주얼" class="w-full h-full object-cover object-center opacity-90" />
+        <div class="absolute inset-0 bg-gradient-to-r from-white via-white/95 to-white/50"></div>
+      </div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-20 lg:py-28">
+        <div class="grid lg:grid-cols-2 gap-10 items-center">
+          <div>
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight text-[var(--ink)]">
+              퇴직 후에도 든든한 노후자산,<br class="hidden sm:block"/> BNK 퇴직연금
+            </h1>
+            <p class="mt-5 text-lg text-gray-700">IRP / DC / DB형, 당신의 생애 설계에 맞는 맞춤형 연금 솔루션</p>
+            <div class="mt-8 flex flex-wrap gap-3">
+              <a href="#consult" class="btn-primary" aria-describedby="cta-desc">지금 상담 신청하기</a>
+              <p id="cta-desc" class="sr-only">전문 상담사를 통해 상품 추천 및 가입 안내를 받습니다.</p>
+              <a href="#compare" class="inline-flex items-center px-5 py-3 rounded-xl font-semibold ring-1 ring-black/10 hover:ring-black/20">상품 한눈에 보기</a>
+            </div>
+            <dl class="mt-8 grid grid-cols-3 gap-6 text-center" aria-label="주요 지표">
+              <div class="card py-4">
+                <dt class="text-sm text-gray-600">세액공제</dt>
+                <dd class="text-2xl font-bold">최대 700만원</dd>
+              </div>
+              <div class="card py-4">
+                <dt class="text-sm text-gray-600">고객만족도</dt>
+                <dd class="text-2xl font-bold">4.7/5</dd>
+              </div>
+              <div class="card py-4">
+                <dt class="text-sm text-gray-600">상담 소요</dt>
+                <dd class="text-2xl font-bold">평균 10분</dd>
+              </div>
+            </dl>
+          </div>
+          <!-- Right: floating comparison cards echoing the poster layout -->
+          <div class="grid sm:grid-cols-3 gap-5">
+            <article class="card p-5" id="compare">
+              <h3 class="font-bold text-xl">IRP</h3>
+              <p class="kpi mt-1">세제 혜택</p>
+              <ul class="mt-3 text-sm list-disc list-inside text-gray-700">
+                <li>개인형 퇴직연금 계좌</li>
+                <li>연금저축과 이중공제 불가</li>
+                <li>중도인출 제한, 장기자산 적합</li>
+              </ul>
+            </article>
+            <article class="card p-5">
+              <h3 class="font-bold text-xl">DC</h3>
+              <p class="kpi mt-1">운용 유연성</p>
+              <ul class="mt-3 text-sm list-disc list-inside text-gray-700">
+                <li>확정기여형, 근로자 운용</li>
+                <li>포트폴리오 자율 선택</li>
+                <li>장기 수익성 지향</li>
+              </ul>
+            </article>
+            <article class="card p-5">
+              <h3 class="font-bold text-xl">DB</h3>
+              <p class="kpi mt-1">수익 안정성</p>
+              <ul class="mt-3 text-sm list-disc list-inside text-gray-700">
+                <li>확정급여형, 회사 책임</li>
+                <li>퇴직 전 평균임금 기반</li>
+                <li>보수적 운용 지향</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Benefits -->
+    <section id="benefits" class="bg-[var(--bnk-gray)] py-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-2xl sm:text-3xl font-extrabold">BNK 퇴직연금, 이렇게 혜택을 드립니다</h2>
+        <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="card p-6">
+            <h3 class="font-semibold">세액공제 우대</h3>
+            <p class="mt-2 text-gray-700">연간 납입액 기준 최대 700만원 한도 내 세액공제.</p>
+          </div>
+          <div class="card p-6">
+            <h3 class="font-semibold">수수료 혜택</h3>
+            <p class="mt-2 text-gray-700">BNK 고객 전용 수수료 우대 프로그램 적용.</p>
+          </div>
+          <div class="card p-6">
+            <h3 class="font-semibold">AI 포트폴리오 추천</h3>
+            <p class="mt-2 text-gray-700">위험성향 기반 자동 자산배분 가이드 제공.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Simulator -->
+    <section id="simulator" class="py-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-10 items-start">
+          <div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold">간편 노후자산 시뮬레이터</h2>
+            <p class="mt-2 text-gray-700">나이, 월 납입액, 예상수익률을 입력하면 65세까지의 예상자산을 추정합니다. (단순 복리 가정)</p>
+            <form id="calcForm" class="mt-6 card p-6" aria-labelledby="simHeader">
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <label class="block">
+                  <span class="text-sm text-gray-700">나이</span>
+                  <input id="age" type="number" min="18" max="64" value="45" class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-[var(--bnk-red)]" aria-describedby="ageHelp" />
+                  <span id="ageHelp" class="text-xs text-gray-500">기준: 만 나이</span>
+                </label>
+                <label class="block">
+                  <span class="text-sm text-gray-700">월 납입액(원)</span>
+                  <input id="contrib" type="number" step="10000" value="1000000" class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-[var(--bnk-red)]" />
+                </label>
+                <label class="block">
+                  <span class="text-sm text-gray-700">예상수익률(연 %)</span>
+                  <input id="rate" type="number" step="0.1" value="3.5" class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-[var(--bnk-red)]" />
+                </label>
+              </div>
+              <button type="button" id="calcBtn" class="btn-primary w-full mt-5">예상 노후자산 계산하기</button>
+              <output id="calcResult" class="block mt-4 text-lg font-bold" aria-live="polite"></output>
+            </form>
+          </div>
+          <div>
+            <div class="card p-6">
+              <h3 class="font-semibold">알림</h3>
+              <ul class="mt-2 text-sm text-gray-700 list-disc list-inside">
+                <li>월 납입액을 매월 동일하게 납입한다고 가정합니다.</li>
+                <li>연 수익률을 월 복리(r/12)로 단순 환산합니다.</li>
+                <li>세금·수수료·손실 가능성 등은 반영하지 않았습니다.</li>
+              </ul>
+            </div>
+            <div class="mt-6 card p-6" id="reviews">
+              <h3 class="font-semibold">고객 후기</h3>
+              <figure class="mt-3">
+                <blockquote class="text-gray-800">다양한 상품과 전문가 상담으로 노후 대비를 체계적으로 준비할 수 있었어요.</blockquote>
+                <figcaption class="mt-2 text-sm text-gray-500">— 부산 진구 · 40대 직장인</figcaption>
+              </figure>
+            </div>
+            <div class="mt-6 card p-6">
+              <h3 class="font-semibold">인증/로고</h3>
+              <div class="mt-3 flex items-center gap-6 text-sm text-gray-600">
+                <span class="inline-flex items-center gap-2"><span class="h-6 w-6 rounded bg-gray-200"></span> FSS 등록</span>
+                <span class="inline-flex items-center gap-2"><span class="h-6 w-6 rounded bg-gray-200"></span> ISMS</span>
+                <span class="inline-flex items-center gap-2"><span class="h-6 w-6 rounded bg-gray-200"></span> BNK</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact CTA -->
+    <section id="consult" class="bg-white py-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-2xl sm:text-3xl font-extrabold">전문가와 1:1로 상담하고 맞춤 솔루션을 받아보세요</h2>
+        <p class="mt-2 text-gray-700">지점 방문 · 전화 · 화상 중 선택</p>
+        <form class="mt-6 max-w-2xl mx-auto grid sm:grid-cols-3 gap-3">
+          <input type="text" placeholder="이름" aria-label="이름" class="rounded-xl border border-gray-300 px-4 py-3 focus:ring-2 focus:ring-[var(--bnk-red)]" required />
+          <input type="tel" placeholder="연락처" aria-label="연락처" class="rounded-xl border border-gray-300 px-4 py-3 focus:ring-2 focus:ring-[var(--bnk-red)]" required />
+          <button type="submit" class="btn-primary">상담 요청</button>
+        </form>
+        <p class="mt-3 text-xs text-gray-500">제출 시 개인(신용)정보 수집·이용에 동의한 것으로 간주합니다.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-gray-50 border-t border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 grid md:grid-cols-4 gap-8">
+      <div>
+        <div class="flex items-center gap-2 font-semibold"><span class="h-6 w-6 rounded bg-[var(--bnk-red)] inline-block"></span> BNK 퇴직연금</div>
+        <p class="mt-3 text-sm text-gray-600">고객센터 1588-0000 · 평일 09:00–18:00</p>
+      </div>
+      <div>
+        <h4 class="font-semibold">바로가기</h4>
+        <ul class="mt-3 space-y-2 text-sm text-gray-700">
+          <li><a class="hover:text-[var(--bnk-red)]" href="#compare">상품비교</a></li>
+          <li><a class="hover:text-[var(--bnk-red)]" href="#benefits">혜택</a></li>
+          <li><a class="hover:text-[var(--bnk-red)]" href="#simulator">시뮬레이터</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-semibold">고객지원</h4>
+        <ul class="mt-3 space-y-2 text-sm text-gray-700">
+          <li><a class="hover:text-[var(--bnk-red)]" href="#consult">상담신청</a></li>
+          <li><a class="hover:text-[var(--bnk-red)]" href="#">지점안내</a></li>
+          <li><a class="hover:text-[var(--bnk-red)]" href="#">공시정보</a></li>
+        </ul>
+      </div>
+      <div class="text-sm text-gray-600">
+        <p>ⓒ BNK Busan Bank. All rights reserved.</p>
+        <p class="mt-2">본 페이지는 예시 랜딩페이지로, 실제 상품 안내는 약관과 공시를 우선합니다.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Simple FV calculator: monthly contribution, monthly compounding until age 65
+    (function(){
+      const byId = (id) => document.getElementById(id);
+      const fmt = (n) => n.toLocaleString('ko-KR');
+      const btn = byId('calcBtn');
+      const out = byId('calcResult');
+
+      function calc(){
+        const age = Math.max(18, Math.min(64, Number(byId('age').value||45)));
+        const months = (65 - age) * 12; // to age 65
+        const contrib = Math.max(0, Number(byId('contrib').value||0));
+        const r = Math.max(0, Number(byId('rate').value||0)) / 100;
+        const i = r / 12; // monthly rate
+
+        // Future value of ordinary annuity: FV = P * [((1+i)^n - 1) / i]
+        let fv = 0;
+        if (i === 0) {
+          fv = contrib * months;
+        } else {
+          fv = contrib * ( (Math.pow(1+i, months) - 1) / i );
+        }
+
+        out.textContent = `예상 노후자산: 약 ${fmt(Math.round(fv))}원 (세전 · 단순가정)`;
+      }
+      if(btn){ btn.addEventListener('click', calc); }
+      // preload
+      window.addEventListener('DOMContentLoaded', calc);
+    })();
+  </script>
+</body>
+</html>
